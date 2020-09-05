@@ -1,0 +1,13 @@
+Matematica - M
+Castellano - C
+Ingles - I
+Fisica - F
+Quimica - Q
+Biologia - B
+Historia - H
+Deporte - D
+Salud - S
+Geografia - G
+
+
+https://es.stackoverflow.com/questions/15953/problema-con-caracteres-%C3%B1-y-acentos-generando-un-json

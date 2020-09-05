@@ -1,0 +1,23 @@
+.FJ_errorPointer,
+.FJ_errorScreen {
+    position: absolute;
+    width: 400px;
+    height: 40px;
+    background-color: violet;
+    border: 2px solid black;
+    text-align: left;
+    line-height: 40px;
+    font-weight: 900;
+    display: none;
+    border: 3px solid var(--Color-Principal);
+    border-radius: 10px;
+}
+
+.FJ_errorPointer::selection,
+.FJ_errorScreen::selection {
+    background: transparent;
+}
+
+.invisible {
+    display: none;
+}

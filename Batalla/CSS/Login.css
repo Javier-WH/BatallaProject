@@ -1,0 +1,186 @@
+/* 
+    Este fichero contien los Stilos CSS correspondientes a index.html del proyecto Batalla
+
+
+*/
+
+:root {
+    --Color-Principal: rgb(58, 58, 211);
+    --Color-Principal-Oscuro: rgb(0, 0, 156);
+    --Color-Secundario: white;
+    --Color-Contraste: rgb(129, 129, 129);
+    --Text-Size1: 20px;
+}
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#contenedor_principal {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--Color-Secundario);
+    border: 2px solid var(--Color-Principal);
+    text-align: center;
+    padding: 50px 0;
+    min-width: 400px;
+    max-width: 400px;
+    padding-top: 120px;
+}
+
+.contenerdor-input {
+    position: relative;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.login-input {
+    width: 100%;
+    text-indent: 50px;
+    height: 30px;
+    line-height: 30px;
+    font-size: var(--Text-Size1);
+    margin-top: 10px;
+    border: none;
+    border-bottom: 1px solid var(--Color-Contraste);
+    color: var(--Color-Contraste);
+    transition: 0.5s ease;
+}
+
+.login-input:hover {
+    border-bottom: 1px solid var(--Color-Principal);
+}
+
+.login-input:focus {
+    outline: none;
+    border-bottom: 2px solid var(--Color-Principal);
+    color: var(--Color-Principal);
+}
+
+.lbl-input {
+    display: block;
+    text-align: left;
+    font-size: var(--Text-Size1);
+    color: var(--Color-Contraste);
+    cursor: pointer;
+}
+
+.contenedor-botones {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+}
+
+.contenedor-boton {
+    position: relative;
+}
+
+.boton {
+    width: 100%;
+    border: 1px solid var(--Color-Principal);
+    color: var(--Color-Principal);
+    background-color: var(--Color-Secundario);
+    height: 30px;
+    font-size: var(--Text-Size1)*0.5;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.boton:hover {
+    color: var(--Color-Secundario);
+    background-color: var(--Color-Principal);
+}
+
+.boton:active {
+    outline: none;
+    background-color: var(--Color-Principal-Oscuro);
+}
+
+.boton:focus {
+    outline: none;
+}
+
+#contenedor-logo {
+    position: relative;
+}
+
+#LOGO {
+    position: absolute;
+    width: 50%;
+    max-width: 200px;
+    background-color: white;
+    border: 3px solid var(--Color-Principal);
+    border-radius: 100%;
+    padding: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: -250px;
+}
+
+.iconos-input {
+    position: absolute;
+    height: 50%;
+    left: 0px;
+    top: 50%;
+    fill: var(--Color-Contraste);
+    cursor: pointer;
+}
+
+#ShowHiddenIcon {
+    right: 0px;
+    position: absolute;
+    height: 50%;
+    right: 0px;
+    top: 50%;
+    fill: var(--Color-Contraste);
+    cursor: pointer;
+}
+
+
+/* la linea del icono del ojo */
+
+#line {
+    stroke: var(--Color-Contraste);
+}
+
+#mensajeError {
+    position: absolute;
+    height: 60px;
+    background-color: red;
+    color: white;
+    display: none;
+    left: 5%;
+    right: 5%;
+    top: 18%;
+    border: 1px solid var(--Color-Principal);
+}
+
+#gridError {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+#icono-error {
+    position: absolute;
+    stroke: white;
+    fill: red;
+    stroke-width: 0.5px;
+    width: 15%;
+    left: 2%;
+}
+
+#mensaje {
+    text-align: left;
+    font-size: 18px;
+}
+

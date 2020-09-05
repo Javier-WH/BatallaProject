@@ -1,0 +1,512 @@
+:root {
+    --Color-Principal: rgb(58, 58, 211);
+    --Color-Principal-Oscuro: rgb(0, 0, 156);
+    --Color-Secundario: white;
+    --Color-Contraste: rgb(129, 129, 129);
+    --Text-Size1: 20px;
+}
+
+header {
+    pointer-events: none;
+    z-index: 500;
+    display: grid;
+    grid-template-columns: 2fr 9fr;
+    column-gap: 10px;
+    background-color: var(--Color-Secundario);
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    border: none;
+    border-bottom: 2px solid var(--Color-Principal);
+    max-height: 50px;
+    min-height: 50px;
+    line-height: 50px;
+}
+
+#NombreUsuario {
+    z-index: 499;
+    position: fixed;
+    top: 30px;
+    left: 150px;
+    color: var(--Color-Principal);
+    background-color: var(--Color-Secundario);
+    /* width: 100%; */
+    padding-top: 30px;
+    pointer-events: none;
+}
+
+#contenedor-logo {
+    position: relative;
+}
+
+#logo {
+    min-width: 100px;
+    max-width: 120px;
+    background-color: white;
+    border-radius: 100%;
+    border: 2px solid var(--Color-Principal);
+}
+
+#titulo {
+    color: var(--Color-Principal);
+    font-size: 33px;
+    text-align: left;
+}
+
+#usuario {
+    min-width: 40px;
+    max-width: 40px;
+}
+
+.icono-usuario {
+    fill: var(--Color-Principal);
+    display: inline;
+}
+
+.input-data {
+    z-index: 250;
+}
+
+#MainContainer1 {
+    margin-left: 20px;
+    margin-bottom: 40px;
+}
+
+label {
+    display: block;
+    color: var(--Color-Contraste);
+    margin-top: 25px;
+}
+
+.contenedor {
+    width: 30%;
+    min-width: 550px;
+}
+
+#Contenedor-Seccion {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+}
+
+.input-data {
+    width: 100%;
+    border: 1px solid white;
+    border-bottom: 1px solid var(--Color-Contraste);
+    color: var(--Color-Contraste);
+}
+
+.input-data:hover {
+    border: 1px solid white;
+    border-bottom: 1px solid var(--Color-Principal);
+    color: var(--Color-Principal);
+}
+
+.input-data:focus {
+    outline: none;
+    border: 1px solid white;
+    border-bottom: 2px solid var(--Color-Principal);
+    color: var(--Color-Principal);
+}
+
+#Contenedor-Buscar-Alumno {
+    display: grid;
+    grid-template-columns: 100% 1fr;
+    column-gap: 20px;
+}
+
+#btnLimpiar {
+    margin-top: 35%;
+}
+
+.boton {
+    padding: 8px;
+    border: 1px solid var(--Color-Principal);
+    color: var(--Color-Principal);
+    background-color: var(--Color-Secundario);
+    font-size: 17px;
+}
+
+.boton:hover {
+    color: var(--Color-Secundario);
+    background-color: var(--Color-Principal);
+}
+
+.boton:active {
+    outline: none;
+    background-color: var(--Color-Principal-Oscuro);
+}
+
+.boton:focus {
+    outline: none;
+}
+
+#table1 {
+    margin-top: 50px;
+    border-collapse: collapse;
+}
+
+.td1 {
+    border-bottom: 1px solid var(--Color-Principal);
+    height: 60px;
+}
+
+#lblNota1,
+#lblNota2,
+#lblNota3 {
+    font-size: 25px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.Columna-Botones {
+    min-width: 50px;
+}
+
+.Columna-Cedula {
+    min-width: 120px;
+}
+
+.Columna-Cedula2 {
+    min-width: 80px;
+}
+
+.Columna-Nombre {
+    min-width: 400px;
+}
+
+.Columna-Nombre2 {
+    min-width: 300px;
+}
+
+.input-nota {
+    width: 90px;
+    height: 40px;
+    font-size: 30px;
+    border: 1px solid var(--Color-Contraste);
+    color: var(--Color-Contraste);
+}
+
+.input-nota:focus {
+    outline: none;
+    border: 2px solid var(--Color-Principal);
+    color: var(--Color-Principal);
+}
+
+.nombreAlumno {
+    color: var(--Color-Principal);
+    font-size: 20px;
+}
+
+#contenedorBotones {
+    text-align: center;
+}
+
+#btn-Anterior,
+#btn-Siguiente {
+    outline: none;
+    width: 45%;
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+#btn-Guardar {
+    outline: none;
+    text-align: center;
+    width: 60%;
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+}
+
+#btn-Limpiar {
+    margin-top: 20px;
+    width: 50px;
+    background-color: transparent;
+    border: none;
+}
+
+.iconoBoton2 {
+    stroke: var(--Color-Contraste);
+}
+
+.iconoBoton2:hover {
+    stroke: var(--Color-Principal);
+}
+
+#btn-Limpiar:active {
+    outline: none;
+}
+
+#btn-Limpiar:focus {
+    outline: none;
+}
+
+.lblinputData {
+    margin: 15px 0px;
+    margin-top: 20px;
+}
+
+.iconoBoton {
+    width: 100%;
+    fill: var(--Color-Contraste);
+}
+
+.iconoBoton:hover {
+    fill: var(--Color-Principal);
+}
+
+#windowContainer {
+    margin-top: 110px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 50px;
+}
+
+#MainContainer2 {
+    overflow-y: scroll;
+    height: 650px;
+    max-width: 700px;
+    border: 0.5px solid var(--Color-Contraste);
+    border-left: 4px solid var(--Color-Contraste);
+}
+
+.ColLapso {
+    min-width: 30px;
+    padding-bottom: 50%;
+}
+
+.nomina1,
+.nomina2 {
+    margin-top: 0px;
+    border-collapse: collapse;
+    margin-left: 10px;
+    margin-right: 20px;
+    width: 97%;
+}
+
+.td2 {
+    height: 0px;
+    margin: 0px;
+    line-height: 0px;
+    border-top: 1px solid var(--Color-Contraste);
+}
+
+.tdSelected {
+    background-color: var(--Color-Principal);
+}
+
+.tdSelected label,
+.tdSelected button {
+    outline: none;
+    color: var(--Color-Secundario);
+}
+
+
+/* botones de la lista de alumnos */
+
+.CL {
+    padding: 10px 0;
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    color: var(--Color-Contraste);
+    cursor: pointer;
+}
+
+.CL:focus {
+    outline: none;
+}
+
+.CL:active {
+    outline: none;
+}
+
+#Hints {
+    width: 45%;
+    border: 1px solid var(--Color-Principal);
+    position: absolute;
+    background-color: white;
+}
+
+.hintOPT {
+    color: var(--Color-Contraste);
+    width: 100%;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.relative {
+    position: relative;
+}
+
+.hintOPT:hover {
+    color: var(--Color-Secundario);
+    background-color: var(--Color-Principal);
+}
+
+#tuto1,
+#tuto2 {
+    position: absolute;
+    font-weight: 900;
+    width: 230px;
+    height: 50px;
+    background-color: var(--Color-Secundario);
+    color: var(--Color-Principal);
+    line-height: 50px;
+    border-radius: 10px;
+    padding: 0 10px;
+    border: 3px solid var(--Color-Principal);
+    top: 210px;
+    left: 200px;
+    display: none;
+}
+
+#tuto2 {
+    top: 80px;
+    left: 450px;
+}
+
+.iconoFlechaArriba {
+    width: 40px;
+    position: absolute;
+    fill: var(--Color-Principal);
+    stroke: var(--Color-Principal);
+    bottom: 35px;
+    background-color: white;
+    border-radius: 100%;
+}
+
+.iconoFlechaAbajo {
+    width: 40px;
+    position: absolute;
+    fill: var(--Color-Principal);
+    stroke: var(--Color-Principal);
+    top: -15px;
+    background-color: white;
+    border-radius: 100%;
+}
+
+#encabezadoNomina {
+    text-indent: 20px;
+    font-size: 20px;
+    color: var(--Color-Contraste);
+}
+
+#MensajeGuardar {
+    z-index: 510;
+    position: fixed;
+    background-color: var(--Color-Principal);
+    color: var(--Color-Secundario);
+    width: 40%;
+    height: 200px;
+    border-radius: 10px;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: none;
+    box-shadow: red 0px 0px 9px, red 0px 0px 9px;
+}
+
+#MensajeGuardar-Texto {
+    margin: 15px auto;
+    font-size: 20px;
+}
+
+#MensajeGuardar-Interno {
+    border: 2px solid var(--Color-Secundario);
+    height: 190px;
+    width: 95%;
+    margin: auto;
+}
+
+#contenedorBotonesMensajeGuardar {
+    width: 50%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+}
+
+#btnNoGuardar {
+    width: 80%;
+    padding: 20px 0;
+    background-color: var(--Color-Secundario);
+    color: red;
+    border: 1px solid var(--Color-Principal);
+    font-size: 20px;
+}
+
+#btnNoGuardar:hover {
+    background-color: red;
+    color: var(--Color-Secundario);
+    border: 1px solid var(--Color-Secundario);
+}
+
+#btnSiGuardar {
+    width: 80%;
+    padding: 20px 0;
+    background-color: var(--Color-Secundario);
+    color: var(--Color-Principal);
+    border: 1px solid var(--Color-Principal);
+    font-size: 20px;
+}
+
+#btnSiGuardar:hover {
+    background-color: var(--Color-Principal);
+    color: var(--Color-Secundario);
+    border: 1px solid var(--Color-Secundario);
+}
+
+#btnNoGuardar:active {
+    outline: none;
+    background-color: rgb(175, 11, 11);
+}
+
+#btnSiGuardar:active {
+    outline: none;
+    background-color: var(--Color-Principal-Oscuro);
+}
+
+#btnNoGuardar:focus {
+    outline: none;
+}
+
+#btnSiGuardar:focus {
+    outline: none;
+}
+
+body {
+    zoom: 100%;
+}
+
+@media(max-width: 1000px) {
+    #titulo {
+        font-size: 22px;
+    }
+    #windowContainer {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    #MainContainer2 {
+        border: 0.5px solid var(--Color-Contraste);
+        border-top: 4px solid var(--Color-Contraste);
+    }
+}
+
+
+/* @media(max-width: 1370px) {
+  
+    body{
+        zoom: 85%;
+    }
+} */

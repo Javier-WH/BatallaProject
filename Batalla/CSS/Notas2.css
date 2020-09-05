@@ -1,0 +1,155 @@
+:root {
+    --Color-Principal: rgb(58, 58, 211);
+    --Color-Principal-Oscuro: rgb(0, 0, 156);
+    --Color-Secundario: white;
+    --Color-Contraste: rgb(129, 129, 129);
+    --Text-Size1: 20px;
+}
+
+.input-data {
+    z-index: 250;
+}
+
+#MainContainer1 {
+    margin-top: 150px;
+    margin-left: 100px;
+}
+
+label {
+    display: block;
+    color: var(--Color-Contraste);
+    margin-top: 25px;
+}
+
+.contenedor {
+    width: 30%;
+}
+
+#Contenedor-Seccion {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+}
+
+.input-data {
+    width: 100%;
+    border: 1px solid white;
+    border-bottom: 1px solid var(--Color-Contraste);
+    color: var(--Color-Contraste);
+}
+
+.input-data:hover {
+    border: 1px solid white;
+    border-bottom: 1px solid var(--Color-Principal);
+    color: var(--Color-Principal);
+}
+
+.input-data:focus {
+    outline: none;
+    border: 1px solid white;
+    border-bottom: 2px solid var(--Color-Principal);
+    color: var(--Color-Principal);
+}
+
+#Contenedor-Buscar-Alumno {
+    display: grid;
+    grid-template-columns: 100% 1fr;
+    column-gap: 20px;
+}
+
+#btnBuscar {
+    margin-top: 35%;
+}
+
+.boton {
+    padding: 8px;
+    border: 1px solid var(--Color-Principal);
+    color: var(--Color-Principal);
+    background-color: var(--Color-Secundario);
+    font-size: 17px;
+}
+
+.boton:hover {
+    color: var(--Color-Secundario);
+    background-color: var(--Color-Principal);
+}
+
+.boton:active {
+    outline: none;
+    background-color: var(--Color-Principal-Oscuro);
+}
+
+.boton:focus {
+    outline: none;
+}
+
+table {
+    margin-top: 50px;
+    border-collapse: collapse;
+}
+
+td {
+    border-bottom: 1px solid var(--Color-Principal);
+    height: 60px;
+}
+
+#lblNota1,
+#lblNota2,
+#lblNota3 {
+    font-size: 25px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.Columna-Botones {
+    min-width: 50px;
+}
+
+.Columna-Cedula {
+    min-width: 120px;
+}
+
+.Columna-Nombre {
+    min-width: 400px;
+}
+
+.input-nota {
+    width: 90px;
+    height: 40px;
+    font-size: 30px;
+    border: 1px solid var(--Color-Contraste);
+    color: var(--Color-Contraste);
+}
+
+.input-nota:focus {
+    outline: none;
+    border: 2px solid var(--Color-Principal);
+    color: var(--Color-Principal);
+}
+
+.nombreAlumno {
+    color: var(--Color-Principal);
+    font-size: 20px;
+}
+
+#contenedorBotones {
+    text-align: center;
+}
+
+#btn-Anterior,
+#btn-Siguiente {
+    outline: none;
+    width: 45%;
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+}
+
+.iconoBoton {
+    width: 100%;
+    fill: var(--Color-Contraste);
+}
+
+.iconoBoton:hover {
+    fill: var(--Color-Principal);
+}

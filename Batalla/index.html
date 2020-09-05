@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad Educativa Batalla de la Victoria</title>
+    <link rel="icon" type="" href="ICON/LogoSmall.png">
+    <link rel="stylesheet" href="CSS/Login.css">
+    <script src="JS/FJ.js"></script>
+    <script src="JS/Icons.js"></script>
+    <script src="JS/animacionLogin.js"></script>
+    <script src="JS/ValidarLogin.js"></script>
+</head>
+
+<body>
+
+    <div id="contenedor_principal">
+        <div id="contenedor-logo">
+            <object data="SVG/BatallaLogo.svg" id="LOGO"></object>
+
+        </div>
+        <div id="mensajeError">
+            <div id="gridError">
+                <div><svg viewbox=" 0 0 20 20" id="icono-error"><script>document.write(icono_advertencia);</script></svg></div>
+                <div id="mensaje">Hola sdasd asdasdasdas asdasd as</div>
+            </div>
+        </div>
+
+        <form id="formulario-login">
+
+
+            <div class="contenedor-datos">
+                <div class="contenerdor-input">
+                    <label for="usuario" class="lbl-input">Usuario:</label>
+                    <input type="text" id="usuario" class="login-input" maxlength="16" autocomplete="off" name="User">
+                    <label for="usuario">
+                        <svg viewbox=" 0 0 20 20" class="iconos-input">
+                            <script>
+                                document.write(icono_usuario);
+                            </script>
+                        </svg>
+                   </label>
+                </div>
+            </div>
+            <!--  -->
+
+            <div class="contenedor-datos">
+                <div class="contenerdor-input">
+                    <label for="Password" class="lbl-input">Contraseña:</label>
+                    <input type="password" id="Password" class="login-input" maxlength="16" autocomplete="off" name="Password">
+
+                    <label for="Password">
+                        <svg viewbox=" 0 0 20 20" class="iconos-input">
+                            <script>
+                                document.write(icono_password);
+                            </script>
+                        </svg>
+                    </label>
+
+                    <svg viewbox=" 0 0 20 20" id="ShowHiddenIcon">
+                        <script>
+                            document.write(icono_mostrar);
+                        </script>
+                    </svg>
+                </div>
+            </div>
+            <!--  -->
+            <div class="contenedor-botones">
+                <div class="contenedor-boton">
+                    <input type="button" value="Registrase" class="boton" id="btnRegistrase">
+                </div>
+                <div class="contenedor-boton">
+                    <input type="submit" value="Ingresar" class="boton" id="btnIngresar">
+
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+</body>
+
+</html>

@@ -21,7 +21,7 @@ let btnNoGuardar;
 window.addEventListener("load", () => {
 
     initialize(); //inicializa todos los elementos
-    getUserData(); //carga los datos de usuario, los periodos y las secciones
+    getUserData("seccion"); //carga los datos de usuario, los periodos y las secciones
     getUserData("periodo"); // va junto con la de arriba
 
 
@@ -269,7 +269,7 @@ const getSecctionCode = (code) => {
 
 /////////////////obtiene todos los datos del usuario/////////////////////
 
-const getUserData = (type = "user") => {
+const getUserData = (type = "seccion") => {
     let xhtml = new XMLHttpRequest();
     let data = new FormData();
     data.append("Type", type);
@@ -280,7 +280,7 @@ const getUserData = (type = "user") => {
 
         if (xhtml.readyState == 4 && xhtml.status == 200) {
             innerUserData = JSON.parse(xhtml.responseText);
-            if (type == "user") {
+            if (type == "seccion") {
                 loadUserData(innerUserData);
             } else if (type == "periodo") {
                 loadPeriodos(innerUserData);
@@ -328,9 +328,10 @@ const loadEstudiantes = () => {
     let xhttp = new XMLHttpRequest();
     let data = new FormData();
     data.append("Periodo", periodo);
+    data.append("Type", "ListaAlumnosCompleta");
 
 
-    xhttp.open("POST", "/BatallaProject/Batalla/PHP/Estudiantes.php", true);
+    xhttp.open("POST", "/BatallaProject/Batalla/PHP/LoadData.php", true);
 
     lista = [];
     xhttp.addEventListener("load", () => {
@@ -547,7 +548,8 @@ const sendData = () => {
         data.append("Datos", JSON.stringify(listaSeccion));
         data.append("Materia", seccion[0].toUpperCase());
         data.append("Periodo", periodo);
-        xhttp.open("POST", "/BatallaProject/Batalla/PHP/AddData.php", true);
+        data.append("Type", "ADDStudent");
+        xhttp.open("POST", "/BatallaProject/Batalla/PHP/LoadData.php", true);
         xhttp.send(data);
         ShowMessageAtPointer("Espere mientras se envian las notas a la base de datos");
         setTimeout(() => {

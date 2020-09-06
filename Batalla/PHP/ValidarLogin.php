@@ -29,12 +29,6 @@ else{
         $_SESSION["Name"] = $Respuesta["Nombre"];
         $_SESSION["User"] = $Respuesta["usuario"];
         $_SESSION["Password"] = $Respuesta["pass"];
-        $_SESSION["Secciones"] = array();
-        for ($i = 1 ; $i <=10 ; $i++){
-            if($Respuesta["Mat$i"] != ""){
-            $_SESSION["Secciones"] = $Respuesta["Mat$i"];
-            }
-        }
         echo "ProfesorEcontrado";
     }
 }

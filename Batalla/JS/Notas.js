@@ -231,7 +231,7 @@ const getSecctionCode = (code) => {
     let data = new FormData();
     data.append("Materia", code[0].toUpperCase());
 
-    xhttp.open("POST", "/Batalla/PHP/getMateria.php", false);
+    xhttp.open("POST", "/BatallaProject/Batalla/PHP/getMateria.php", false);
 
     xhttp.addEventListener("load", () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -273,7 +273,7 @@ const getUserData = (type = "user") => {
     let xhtml = new XMLHttpRequest();
     let data = new FormData();
     data.append("Type", type);
-    xhtml.open("POST", "/Batalla/PHP/LoadData.php", true);
+    xhtml.open("POST", "/BatallaProject/Batalla/PHP/LoadData.php", true);
 
 
     xhtml.addEventListener("load", () => {
@@ -330,7 +330,7 @@ const loadEstudiantes = () => {
     data.append("Periodo", periodo);
 
 
-    xhttp.open("POST", "/Batalla/PHP/Estudiantes.php", true);
+    xhttp.open("POST", "/BatallaProject/Batalla/PHP/Estudiantes.php", true);
 
     lista = [];
     xhttp.addEventListener("load", () => {
@@ -547,7 +547,7 @@ const sendData = () => {
         data.append("Datos", JSON.stringify(listaSeccion));
         data.append("Materia", seccion[0].toUpperCase());
         data.append("Periodo", periodo);
-        xhttp.open("POST", "/Batalla/PHP/AddData.php", true);
+        xhttp.open("POST", "/BatallaProject/Batalla/PHP/AddData.php", true);
         xhttp.send(data);
         ShowMessageAtPointer("Espere mientras se envian las notas a la base de datos");
         setTimeout(() => {

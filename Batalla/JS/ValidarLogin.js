@@ -21,7 +21,7 @@ const isValid = (e) => {
 
         let xhttp = new XMLHttpRequest();
         let data = new FormData(formulario);
-        xhttp.open("POST", "/Batalla/PHP/ValidarLogin.php", true);
+        xhttp.open("POST", "/BatallaProject/Batalla/PHP/ValidarLogin.php", true);
 
         xhttp.addEventListener("load", () => {
 
@@ -31,7 +31,7 @@ const isValid = (e) => {
                 ShowMessage("El servidor no esta disponible");
             } else if (xhttp.readyState == 4 && xhttp.status == 200) {
                 if (xhttp.response == "ProfesorEcontrado") {
-                    window.open("/Batalla/PHP/Notas.php", "_self");
+                    window.open("/BatallaProject/Batalla/PHP/Notas.php", "_self");
                 } else {
                     ShowMessage(xhttp.response);
                 }

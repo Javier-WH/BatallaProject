@@ -131,6 +131,3 @@
             echo "Error message: " . $error->getMessage();
         }
     }
-
-?>
-

@@ -111,7 +111,7 @@
         } catch (Exception $error) {
             die("Error al realizar la consulta");
         }
-     
+
     }
 
     function saveAllMateria($Lista, $Mat, $Periodo){

@@ -8,14 +8,14 @@ const ShowMessageAtPointer = (mensaje = "hola", color = "var(--Color-Secundario)
     Mensaje.style.width = "500pX";
     Mensaje.style.height = "100px";
     Mensaje.style.fontSize = "30px";
-    Mensaje.style.lineHeight = "100px";
+    Mensaje.style.lineHeight = "50px";
     Mensaje.style.borderColor = boder;
     Mensaje.innerHTML = mensaje;
     Mensaje.style.backgroundColor = color;
     Mensaje.style.color = colorTexto;
     Mensaje.style.display = "initial";
-    Mensaje.style.left = (window.innerWidth/2 - Mensaje.offsetWidth /2) + "px";
-    Mensaje.style.top = (window.innerHeight/2 - Mensaje.offsetHeight /2) + "px";
+    Mensaje.style.left = (window.innerWidth / 2 - Mensaje.offsetWidth / 2) + "px";
+    Mensaje.style.top = (window.innerHeight / 2 - Mensaje.offsetHeight / 2) + "px";
     window.addEventListener("mousemove", () => {
         Mensaje.style.width = "400pX";
         Mensaje.style.height = "40px";

@@ -109,7 +109,7 @@ const initialize = () => {
         btnNoGuardar = document.querySelector("#btnNoGuardar");
 
     }
-    //posiciona la sugerencia de ayuda debajo del input buscar alumno
+    //posiciona la sugerencia de ayuda debajo del input buscar alumno (Motor de busqueda)
 const adjustHint = () => {
     Hint.style.top = (TextBuscar.offsetTop + 20) + "px";
     Hint.style.left = TextBuscar.offsetLeft + "px";
@@ -120,7 +120,7 @@ const adjustSaveMessage = () => {
 
 }
 
-//llena la sugerencia del textbox Buscar Alumno de ayuda con elementos de la listaseccion
+//llena la sugerencia del textbox Buscar Alumno de ayuda con elementos de la listaseccion (llena el motor de busqueda)
 const fillHint = () => {
     Hint.style.display = "block";
     Hint.innerHTML = "";
@@ -222,7 +222,7 @@ const getGradeAverage = () => {
     document.getElementById("Nota-Acumulada").value = Math.round((n1 + n2 + n3) / 3);
 }
 
-//determina el codigo de la seccion
+//determina el codigo de la seccion  ///////////////////////////////////////////////////////////////////////////////////////////
 
 const getSecctionCode = (code) => {
     let anno, seccion, materia;
@@ -241,7 +241,7 @@ const getSecctionCode = (code) => {
         }
     })
     xhttp.send(data);
-    
+
     switch (code[1]) {
         case "1":
             anno = "Primer Año";
@@ -552,16 +552,15 @@ const sendData = () => {
         data.append("Periodo", periodo);
         data.append("Type", "ADDStudent");
         xhttp.open("POST", "/BatallaProject/Batalla/PHP/LoadData.php", true);
-        
-        xhttp.addEventListener("load", ()=>{
 
-            if(xhttp.readyState == 4 && xhttp.status == 200){
+        xhttp.addEventListener("load", () => {
+
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
                 SavedData = true;
                 MsjGopt = true;
                 document.querySelector("#List-Periodo").disabled = false;
                 ShowMessageAtPointer("Todas las notas han estan guardadas");
-            }
-            else{
+            } else {
                 ShowMessageAtPointer("ATENCIÓN, ocurrio un problema, no se han podido guardar las notas", "Red", "White");
             }
         })
@@ -584,7 +583,7 @@ const fillTable = () => {
 
 }
 
-//marca un elemento de la tabla conforme el inde vigente .... tambien selecciona un elemeto al hacer click en el
+//marca un elemento de la tabla conforme el indicee vigente .... tambien selecciona un elemeto al hacer click en el
 const selectedFromTable = () => {
 
     for (let i = 0; i < listaSeccion.length; i++) {

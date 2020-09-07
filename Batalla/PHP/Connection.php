@@ -94,6 +94,26 @@
         }
     }
 
+    function getMateriaCode($code){
+        $Connection = getConnection();
+
+        try {
+            $ResultSet = $Connection->prepare("SELECT Materia FROM codigosmaterias WHERE Code = :CodigoMateria");
+            $ResultSet->bindValue(":CodigoMateria",$code);
+            $ResultSet->execute();
+    
+            if($Row = $ResultSet->fetch(PDO::FETCH_ASSOC)){
+                return $Row["Materia"];
+            }
+            else{
+                return "Materia Desconocida";
+            }
+        } catch (Exception $error) {
+            die("Error al realizar la consulta");
+        }
+     
+    }
+
     function saveAllMateria($Lista, $Mat, $Periodo){
         $Connection = getConnection();
         
@@ -111,5 +131,6 @@
             echo "Error message: " . $error->getMessage();
         }
     }
+
 ?>
 

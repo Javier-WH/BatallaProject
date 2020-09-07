@@ -230,8 +230,9 @@ const getSecctionCode = (code) => {
     let xhttp = new XMLHttpRequest();
     let data = new FormData();
     data.append("Materia", code[0].toUpperCase());
+    data.append("Type", "MateriaCode");
 
-    xhttp.open("POST", "/BatallaProject/Batalla/PHP/getMateria.php", false);
+    xhttp.open("POST", "/BatallaProject/Batalla/PHP/LoadData.php", false);
 
     xhttp.addEventListener("load", () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -240,6 +241,7 @@ const getSecctionCode = (code) => {
         }
     })
     xhttp.send(data);
+    
     switch (code[1]) {
         case "1":
             anno = "Primer Año";

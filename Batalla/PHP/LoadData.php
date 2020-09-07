@@ -29,6 +29,9 @@ else{
         $Respuesta = saveAllMateria($Lista, $Mat, $Periodo);
         echo $Respuesta;
     }
+    else if(!strcmp($Type,"MateriaCode")){
+        echo (getMateriaCode($_POST["Materia"]));
+    }
 }
     
 

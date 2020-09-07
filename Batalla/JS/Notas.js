@@ -550,14 +550,21 @@ const sendData = () => {
         data.append("Periodo", periodo);
         data.append("Type", "ADDStudent");
         xhttp.open("POST", "/BatallaProject/Batalla/PHP/LoadData.php", true);
+        
+        xhttp.addEventListener("load", ()=>{
+
+            if(xhttp.readyState == 4 && xhttp.status == 200){
+                SavedData = true;
+                MsjGopt = true;
+                document.querySelector("#List-Periodo").disabled = false;
+                ShowMessageAtPointer("Todas las notas han estan guardadas");
+            }
+            else{
+                ShowMessageAtPointer("ATENCIÓN, ocurrio un problema, no se han podido guardar las notas", "Red", "White");
+            }
+        })
         xhttp.send(data);
-        ShowMessageAtPointer("Espere mientras se envian las notas a la base de datos");
-        setTimeout(() => {
-            xhttp.abort();
-            SavedData = true;
-            MsjGopt = true;
-            document.querySelector("#List-Periodo").disabled = false;
-        }, 5000);
+
     } else {
         ShowMessageAtPointer("No hay nada nuevo que guardar", "var(--Color-Secundario)", "var(--Color-Principal)", "var(--Color-Principal)", 1000);
     }

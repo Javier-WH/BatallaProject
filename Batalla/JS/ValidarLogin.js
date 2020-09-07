@@ -29,15 +29,15 @@ const isValid = (e) => {
                 ShowMessage("Error interno en el servidor");
             } else if (xhttp.status >= 400) {
                 ShowMessage("El servidor no esta disponible");
-            } else if (xhttp.readyState == 4 && xhttp.status == 200) {
-                if (xhttp.response == "ProfesorEcontrado") {
+            } else if (xhttp.readyState == 4 && xhttp.status >= 200) {
+                if (xhttp.responseText == true) {
                     window.open("/BatallaProject/Batalla/PHP/Notas.php", "_self");
-                } else {
-                    ShowMessage(xhttp.response);
                 }
-
-            } else {
-                ShowMessage("Error desconocido");
+                else{
+                    ShowMessage(xhttp.responseText);
+                }
+            }else {
+                ShowMessage("Error inesperado");
             }
 
         });

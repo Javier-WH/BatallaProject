@@ -27,10 +27,7 @@ else{
         $Mat = $_POST["Materia"];
         $Lista = (json_decode($_POST["Datos"], true));
         $Respuesta = saveAllMateria($Lista, $Mat, $Periodo);
-        if($Respuesta){
-            echo "OK";
-        }
-
+        echo $Respuesta;
     }
 }
     

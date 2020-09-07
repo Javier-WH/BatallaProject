@@ -97,11 +97,19 @@
     function saveAllMateria($Lista, $Mat, $Periodo){
         $Connection = getConnection();
         
-        for($i = 0 ; $i < count($Lista) ; $i++){
-            $SQL = "UPDATE $Periodo SET ".$Mat."1='".$Lista[$i][$Mat."1"]."', ".$Mat."2 = '".$Lista[$i][$Mat."2"]."', ".$Mat."3 = '".$Lista[$i][$Mat."3"]."' WHERE ID = '".$Lista[$i]["ID"]."'";
-            $Connection->prepare($SQL)->execute();
+        try {
+            $Connection->beginTransaction();
+        
+            for($i = 0 ; $i < count($Lista) ; $i++){
+                $SQL = "UPDATE $Periodo SET ".$Mat."1='".$Lista[$i][$Mat."1"]."', ".$Mat."2 = '".$Lista[$i][$Mat."2"]."', ".$Mat."3 = '".$Lista[$i][$Mat."3"]."' WHERE ID = '".$Lista[$i]["ID"]."'";
+                $Connection->exec($SQL);
+            }
+            $Connection->commit();
+            echo "OK";
+        } catch (PDOException $error) {
+            $Connection->rollback();
+            echo "Error message: " . $error->getMessage();
         }
-        return true;
     }
 ?>
 

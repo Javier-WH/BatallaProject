@@ -29,7 +29,7 @@ else{
         $_SESSION["Name"] = $Respuesta["Nombre"];
         $_SESSION["User"] = $Respuesta["usuario"];
         $_SESSION["Password"] = $Respuesta["pass"];
-        echo "ProfesorEcontrado";
+        echo true;
     }
 }
 ?>

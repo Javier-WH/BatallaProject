@@ -11,3 +11,5 @@ Geografia - G
 
 
 https://es.stackoverflow.com/questions/15953/problema-con-caracteres-%C3%B1-y-acentos-generando-un-json
+
+https://www.bitdegree.org/learn/mysql-insert-multiple-rows#:~:text=Three%20Ways%20of%20Inserting%20Multiple%20Rows,-MySQL%20insert%20examples&text=%3C%3F,(%22Connection%20failed%3A%20%22%20.

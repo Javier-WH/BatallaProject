@@ -1,4 +1,4 @@
-<?php 
+<?php
     function getConnection(){
         try {
             $DBHost = "localhost";

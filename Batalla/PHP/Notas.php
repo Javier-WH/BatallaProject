@@ -26,6 +26,7 @@ if(!isset($_SESSION["User"]) || !isset($_SESSION["Name"]) || !isset($_SESSION["P
     <script src="../JS/Icons.js"></script>
     <script src="../JS/Notas.js"></script>
     <script src="../JS/FJJS.js"></script>
+    <script src="../JS/system.js"></script>
     
 </head>
 <body>

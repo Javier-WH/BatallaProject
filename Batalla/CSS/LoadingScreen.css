@@ -1,0 +1,18 @@
+:root {
+    --Color-Principal: rgb(58, 58, 211);
+    --Color-Principal-Oscuro: rgb(0, 0, 156);
+    --Color-Secundario: white;
+    --Color-Contraste: rgb(129, 129, 129);
+    --Text-Size1: 20px;
+}
+
+#LoadingScreen {
+    z-index: 1000;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: var(--Color-Principal);
+    display: none;
+}

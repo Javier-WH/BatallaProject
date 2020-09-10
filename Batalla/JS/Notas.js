@@ -2,7 +2,6 @@ let lblnota1, lblnota2, lblnota3;
 let nota1, nota2, nota3;
 let lblInputData, inputdata;
 let btnLimpiar;
-let lista = [];
 let listaSeccion = [];
 let indice = 0;
 let indiceMax;
@@ -18,18 +17,35 @@ let MsjGopt = true;
 let btnSiGuardar;
 let btnNoGuardar;
 
+
+
+/////////////////////////////
+let listaMaterias = [];
+let lista = [];
+let requestTime = 1000;
+let ListaCodigos;
+let ListaPeriodos;
+let ListaSecciones;
+let ListaEstudiantes;
+
+
 window.addEventListener("load", () => {
 
     initialize(); //inicializa todos los elementos
-    getUserData("seccion"); //carga los datos de usuario, los periodos y las secciones
-    getUserData("periodo"); // va junto con la de arriba
+    getPeriodos();
+    getCodigosMaterias();
+    getSeccionList();
+    getListaEstudiantes();
+
+
+
 
 
     events();
     getGradeAverage();
     adjustHint();
     adjustSaveMessage();
-    loadEstudiantes(); //
+    // loadEstudiantes(); //////////////////////////////////////////////////////
     setData();
     periodoAntesQueSeccion();
     Hint.style.display = "none";
@@ -90,7 +106,12 @@ const events = () => {
 
 //inicializa todas las variables
 const initialize = () => {
+        let opt = document.querySelector("#List-Periodo");
 
+        ListaPeriodos = new Conection("periodo"); //para obtener la lista de periodos disponibles
+        ListaCodigos = new Conection("MateriaCode"); //para obtener la lista de codigos de materias
+        ListaSecciones = new Conection("seccion"); //para obtener la lista se secciones del profesor en cuestion
+        ListaEstudiantes = new Conection("ListaAlumnosCompleta", "_p_2020", null); //carga la lista de estudiantes de un periodo
 
         nota1 = document.getElementById("Nota1");
         nota2 = document.getElementById("Nota2");
@@ -227,20 +248,11 @@ const getGradeAverage = () => {
 const getSecctionCode = (code) => {
     let anno, seccion, materia;
 
-    let xhttp = new XMLHttpRequest();
-    let data = new FormData();
-    data.append("Materia", code[0].toUpperCase());
-    data.append("Type", "MateriaCode");
-
-    xhttp.open("POST", "/BatallaProject/Batalla/PHP/LoadData.php", false);
-
-    xhttp.addEventListener("load", () => {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-            materia = xhttp.responseText;
-            // console.log(materia);
+    for (let i = 0; i < listaMaterias.length; i++) {
+        if (code[0].toUpperCase() === listaMaterias[i]["Code"]) {
+            materia = listaMaterias[i]["Materia"];
         }
-    })
-    xhttp.send(data);
+    }
 
     switch (code[1]) {
         case "1":
@@ -271,33 +283,60 @@ const getSecctionCode = (code) => {
 
 /////////////////obtiene todos los datos del usuario/////////////////////
 
-const getUserData = (type = "seccion") => {
-    let xhtml = new XMLHttpRequest();
-    let data = new FormData();
-    data.append("Type", type);
-    xhtml.open("POST", "/BatallaProject/Batalla/PHP/LoadData.php", true);
 
 
-    xhtml.addEventListener("load", () => {
-
-        if (xhtml.readyState == 4 && xhtml.status == 200) {
-            innerUserData = JSON.parse(xhtml.responseText);
-            if (type == "seccion") {
-                loadUserData(innerUserData);
-            } else if (type == "periodo") {
-                loadPeriodos(innerUserData);
-            }
-            // console.log(innerUserData);
-        } else {
-            alert("Error con el servidor de notas");
-            window.open("/Batalla/index.html", "_self");
-        }
-    })
-
-    xhtml.send(data);
+//obtiene los periodos y los asgina
+function getPeriodos() {
+    let Periodos = ListaPeriodos.getResponse;
+    if (Periodos == "Error") {
+        setTimeout(() => {
+            getPeriodos();
+        }, requestTime);
+    } else {
+        loadPeriodos(Periodos);
+    }
 }
 
-//Carga los datos en los campos
+function getCodigosMaterias() {
+    let CodigosMateria = ListaCodigos.getResponse;
+    if (CodigosMateria == "Error") {
+        setTimeout(() => {
+            getCodigosMaterias();
+        }, requestTime);
+    } else {
+
+        listaMaterias = CodigosMateria;
+    }
+}
+
+function getSeccionList() {
+    let secciones = ListaSecciones.getResponse;
+    if (secciones == "Error") {
+        setTimeout(() => {
+            getSeccionList();
+        }, requestTime);
+    } else {
+        loadUserData(secciones);
+    }
+}
+
+function getListaEstudiantes() {
+    let list = ListaEstudiantes.getResponse;
+    if (list == "Error") {
+        setTimeout(() => {
+            getListaEstudiantes();
+        }, requestTime);
+    } else {
+        lista = list;
+    }
+
+}
+
+
+
+
+
+//Carga los datos en los campos LAS SECCIONES
 const loadUserData = (data) => {
     let Seccion = document.querySelector("#List-Seccion");
 
@@ -323,9 +362,7 @@ const loadPeriodos = (data) => {
 
 const loadEstudiantes = () => {
 
-
     periodo = getSelectedOption(document.querySelector("#List-Periodo")).value;
-
 
     let xhttp = new XMLHttpRequest();
     let data = new FormData();
@@ -492,7 +529,7 @@ const ForwardBackward = (e) => {
 const setPeriodo = () => {
         MsjGuardar.style.display = "none"; // esconde el mensaje de guardar si se cambia de perido
         document.querySelector("#List-Seccion").selectedIndex = 0;
-        loadEstudiantes();
+        // loadEstudiantes();
         periodoAntesQueSeccion();
     }
     //se debe escooger el periodo antes que la seccion, para evitar algunos bugs
@@ -573,8 +610,6 @@ const sendData = () => {
 
 //llena la tabla de estudiantes
 const fillTable = () => {
-
-
     Tabla.innerHTML = "";
     for (i = 0; i < listaSeccion.length; i++) {
         Tabla.innerHTML += "<tr id = 'T" + i + "'> <td class = 'td2'> <button class = 'Columna-Cedula2 CL' id='C" + i + "'> " + listaSeccion[i]["Cedula"] + " </button></td><td class = 'td2' > <button class = 'Columna-Nombre2 CL' id='N" + i + "'> " + listaSeccion[i]["Nombre"] + " </button></td><td class = 'td2'> <label class = 'ColLapso'> " + listaSeccion[i][seccion[0].toUpperCase() + "1"] + " </label></td><td class = 'td2'> <label class = 'ColLapso'> " + listaSeccion[i][seccion[0].toUpperCase() + "2"] + " </label></td><td class = 'td2'> <label class = 'ColLapso'> " + listaSeccion[i][seccion[0].toUpperCase() + "3"] + " </label></td></tr>";

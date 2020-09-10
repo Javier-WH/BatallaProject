@@ -2,38 +2,38 @@ const ConnectionTime = 1500;
 let test;
 let count = 0;
 window.addEventListener("load", () => {
-    
-    test = new Conection("ListaAlumnosCompleta", "_p_2020", null);
-    let test2 = new Conection("seccion");
-    let test3 = new Conection("periodo");
-    let test4 = new Conection("MateriaCode");
+
+    // test = new Conection("ListaAlumnosCompleta", "_p_2020", null);
+    // let test2 = new Conection("seccion");
+    // let test3 = new Conection("periodo");
+    // let test4 = new Conection("MateriaCode");
 
     // let x = "qwwqe";
     // setTimeout(() => {
     //     x = test.getResponse;
     //     console.log(x);
-        // console.log(test.getResponse);
+    // console.log(test.getResponse);
     //     console.log(test2.getResponse);
     //     console.log(test3.getResponse);
     //     console.log(test4.getResponse);
     // }, ConnectionTime);
-    setStudensList();
+    // setStudensList();
 })
 
-function setStudensList(){
-    let list = test.getResponse;
-    if(list=="Error")
-    {
-        setTimeout(() => {
-            count++;
-            console.log(count);
-            setStudensList();
-        }, 1);
-    }
-    else{
-        console.log(list);
-    }   
-}
+// function setStudensList() {
+//     let list = test.getResponse;
+//     if (list == "Error") {
+//         setTimeout(() => {
+//             count++;
+//             console.log(count);
+//             setStudensList();
+//         }, 1000);
+//     } else {
+//         document.querySelector("#LoadingScreen").style.display = "none";
+//         console.log(list);
+//     }
+// }
+
 
 
 class Conection {
@@ -45,7 +45,7 @@ class Conection {
         }
         this.xhttp = new XMLHttpRequest()
         this.xhttp.open("POST", this.URL, true);
-        this.xhttp.onreadystatechange =()=>{
+        this.xhttp.onreadystatechange = () => {
             if (this.xhttp.readyState == 4 & this.xhttp.status == 200) {
                 this.response = JSON.parse(this.xhttp.responseText);
             } else {
@@ -55,10 +55,9 @@ class Conection {
         this.xhttp.send();
     }
     get getResponse() {
-        if(this.response != null){
+        if (this.response != null) {
             return this.response;
-        }
-        else{
+        } else {
             return "Error";
         }
     }

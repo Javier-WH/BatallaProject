@@ -94,20 +94,17 @@
         }
     }
 
-    function getMateriaCode($code){
+    function getMateriaCode(){
         $Connection = getConnection();
-
         try {
-            $ResultSet = $Connection->prepare("SELECT Materia FROM codigosmaterias WHERE Code = :CodigoMateria");
-            $ResultSet->bindValue(":CodigoMateria",$code);
+            $ResultSet = $Connection->prepare("SELECT * FROM codigosmaterias");
             $ResultSet->execute();
-    
-            if($Row = $ResultSet->fetch(PDO::FETCH_ASSOC)){
-                return $Row["Materia"];
+            $i=0;
+            while($Row = $ResultSet->fetch(PDO::FETCH_ASSOC)){
+                $Respuesta[$i] = $Row;
+                $i++;
             }
-            else{
-                return "Materia Desconocida";
-            }
+            return json_encode($Respuesta);
         } catch (Exception $error) {
             die("Error al realizar la consulta");
         }

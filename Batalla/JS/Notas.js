@@ -2,8 +2,7 @@ let lblnota1, lblnota2, lblnota3;
 let nota1, nota2, nota3;
 let lblInputData, inputdata;
 let btnLimpiar;
-let listaSeccion = [];
-let indice = 0;
+
 let indiceMax;
 let innerUserData;
 let seccion;
@@ -13,15 +12,13 @@ let Tabla;
 let Hint;
 let TextBuscar;
 let MsjGuardar;
-let MsjGopt = true;
 let btnSiGuardar;
 let btnNoGuardar;
-
-
-
 /////////////////////////////
+let indice = 0;
 let listaMaterias = [];
 let lista = [];
+let listaSeccion = [];
 let requestTime = 1000;
 let ListaCodigos;
 let ListaPeriodos;
@@ -32,12 +29,7 @@ let ListaEstudiantes;
 window.addEventListener("load", () => {
 
     initialize(); //inicializa todos los elementos
-    getPeriodos();
-    getCodigosMaterias();
-    getSeccionList();
-    getListaEstudiantes();
-
-
+  
 
 
 
@@ -45,9 +37,6 @@ window.addEventListener("load", () => {
     getGradeAverage();
     adjustHint();
     adjustSaveMessage();
-    // loadEstudiantes(); //////////////////////////////////////////////////////
-    setData();
-    periodoAntesQueSeccion();
     Hint.style.display = "none";
 
 })
@@ -56,46 +45,24 @@ window.addEventListener("load", () => {
 //asigna todos los eventos
 const events = () => {
 
-
     nota1.addEventListener("focus", NotaGainFocus);
     nota2.addEventListener("focus", NotaGainFocus);
     nota3.addEventListener("focus", NotaGainFocus);
     nota1.addEventListener("blur", NotaLostFocus);
     nota2.addEventListener("blur", NotaLostFocus);
     nota3.addEventListener("blur", NotaLostFocus);
-    nota1.addEventListener("keyup", getChanges);
-    nota2.addEventListener("keyup", getChanges);
-    nota3.addEventListener("keyup", getChanges);
     nota1.addEventListener("keydown", preventkeyUpKeyDown);
     nota2.addEventListener("keydown", preventkeyUpKeyDown);
     nota3.addEventListener("keydown", preventkeyUpKeyDown);
-
     inputdata[0].addEventListener("focus", NotaGainFocus);
     inputdata[1].addEventListener("focus", NotaGainFocus);
     inputdata[2].addEventListener("focus", NotaGainFocus);
     inputdata[0].addEventListener("blur", NotaLostFocus);
     inputdata[1].addEventListener("blur", NotaLostFocus);
     inputdata[2].addEventListener("blur", NotaLostFocus);
-
-    document.querySelector("#List-Periodo").addEventListener("click", isSaved);
-    document.querySelector("#List-Periodo").addEventListener("change", setPeriodo);
-    document.querySelector("#List-Seccion").addEventListener("change", selectEstudiantes);
-    document.querySelector("#List-Periodo").addEventListener("change", setData); ////////////////////
-    document.querySelector("#List-Seccion").addEventListener("change", periodoAntesQueSeccion);
-    document.querySelector("#List-Periodo").addEventListener("change", periodoAntesQueSeccion);
-
-    document.querySelector("#btn-Guardar").addEventListener("click", sendData);
-
     TextBuscar.addEventListener("keyup", fillHint);
 
-    window.addEventListener('mousemove', tuto1);
 
-    document.getElementById("btn-Siguiente").addEventListener("click", ForwardBackward);
-    document.getElementById("btn-Anterior").addEventListener("click", ForwardBackward);
-    window.addEventListener("keydown", ForwardBackward);
-
-    btnSiGuardar.addEventListener("click", saveMessageButtons);
-    btnNoGuardar.addEventListener("click", saveMessageButtons);
 
     btnLimpiar.addEventListener("click", () => {
         TextBuscar.value = "";
@@ -177,9 +144,7 @@ const preventkeyUpKeyDown = (e) => {
     if (e.key == "ArrowUp" || e.key == "ArrowDown") {
         e.preventDefault();
     }
-
 }
-
 //complemento animacion cuando ganan focus
 const NotaGainFocus = (e) => {
     if (e.target == nota1) {
@@ -219,7 +184,6 @@ const NotaLostFocus = (e) => {
     }
     getGradeAverage();
 
-
 }
 
 //obtiene el promedio de las tres notas
@@ -243,245 +207,6 @@ const getGradeAverage = () => {
     document.getElementById("Nota-Acumulada").value = Math.round((n1 + n2 + n3) / 3);
 }
 
-//determina el codigo de la seccion  ///////////////////////////////////////////////////////////////////////////////////////////
-
-const getSecctionCode = (code) => {
-    let anno, seccion, materia;
-
-    for (let i = 0; i < listaMaterias.length; i++) {
-        if (code[0].toUpperCase() === listaMaterias[i]["Code"]) {
-            materia = listaMaterias[i]["Materia"];
-        }
-    }
-
-    switch (code[1]) {
-        case "1":
-            anno = "Primer Año";
-            break;
-        case "2":
-            anno = "Segundo Año";
-            break;
-        case "3":
-            anno = "Tercer Año";
-            break;
-        case "4":
-            anno = "Cuarto Año";
-            break;
-        case "5":
-            anno = "Quinto Año";
-            break;
-        default:
-            anno = "Año Desconocido";
-            break;
-    }
-
-    seccion = code[2].toUpperCase();
-    return materia + " - " + anno + " " + seccion;
-}
-
-
-
-/////////////////obtiene todos los datos del usuario/////////////////////
-
-
-
-//obtiene los periodos y los asgina
-function getPeriodos() {
-    let Periodos = ListaPeriodos.getResponse;
-    if (Periodos == "Error") {
-        setTimeout(() => {
-            getPeriodos();
-        }, requestTime);
-    } else {
-        loadPeriodos(Periodos);
-    }
-}
-
-function getCodigosMaterias() {
-    let CodigosMateria = ListaCodigos.getResponse;
-    if (CodigosMateria == "Error") {
-        setTimeout(() => {
-            getCodigosMaterias();
-        }, requestTime);
-    } else {
-
-        listaMaterias = CodigosMateria;
-    }
-}
-
-function getSeccionList() {
-    let secciones = ListaSecciones.getResponse;
-    if (secciones == "Error") {
-        setTimeout(() => {
-            getSeccionList();
-        }, requestTime);
-    } else {
-        loadUserData(secciones);
-    }
-}
-
-function getListaEstudiantes() {
-    let list = ListaEstudiantes.getResponse;
-    if (list == "Error") {
-        setTimeout(() => {
-            getListaEstudiantes();
-        }, requestTime);
-    } else {
-        lista = list;
-    }
-
-}
-
-
-
-
-
-//Carga los datos en los campos LAS SECCIONES
-const loadUserData = (data) => {
-    let Seccion = document.querySelector("#List-Seccion");
-
-    for (let i = 1; i <= 10; i++) {
-        if (data["Mat" + i] != "") {
-            Seccion.innerHTML += "<option value='" + data["Mat" + i] + "'>" + getSecctionCode(data["Mat" + i]) + "</option>";
-        }
-    }
-}
-
-//carga los periodos
-
-const loadPeriodos = (data) => {
-    let Periodos = document.querySelector("#List-Periodo");
-
-    for (let i = data.length - 1; i >= 0; i--) {
-        Periodos.innerHTML += "<option value = '" + data[i]["Periodos"] + "'>" + data[i]["Periodos"].substring(3) + "</option>";
-    }
-
-}
-
-//Carga los estudiantes
-
-const loadEstudiantes = () => {
-
-    periodo = getSelectedOption(document.querySelector("#List-Periodo")).value;
-
-    let xhttp = new XMLHttpRequest();
-    let data = new FormData();
-    data.append("Periodo", periodo);
-    data.append("Type", "ListaAlumnosCompleta");
-
-
-    xhttp.open("POST", "/BatallaProject/Batalla/PHP/LoadData.php", true);
-
-    lista = [];
-    xhttp.addEventListener("load", () => {
-
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-            lista = JSON.parse(xhttp.responseText);
-            // console.log(lista);
-            return lista
-        }
-    })
-    xhttp.send(data);
-
-
-}
-
-//selecciona los estudiantes, llena lista seccion2
-const selectEstudiantes = (reset = true) => {
-    let doesExist = false;
-    if (reset) {
-        indice = 0;
-    }
-
-    periodo = getSelectedOption(document.querySelector("#List-Periodo")).value;
-    seccion = getSelectedOption(document.querySelector("#List-Seccion")).value;
-
-
-    document.querySelector("#NombreAlumno").style.color = "var(--Color-Principal)";
-
-    //Verifica que existen registros con el grado y la seccion seleccionado
-    for (let i = 0; i < lista.length; i++) {
-        if (lista[i]["Grado"].includes(seccion[1]) && lista[i]["Seccion"].includes(seccion[2])) {
-            doesExist = true;
-            break;
-        }
-
-    }
-
-
-    if (doesExist) {
-
-        listaSeccion = [];
-        for (let i = 0; i < lista.length; i++) {
-            if (lista[i]["Seccion"] == seccion[2] && lista[i]["Grado"] == seccion[1]) {
-                listaSeccion.push(lista[i]);
-            }
-        }
-        indiceMax = listaSeccion.length - 1;
-
-
-    } else {
-
-        if (getSelectedOption(document.querySelector("#List-Seccion")).value != "none") {
-            alert("No se encontraron alumnos en la seccion seleccionada");
-            document.querySelector("#List-Seccion").selectedIndex = 0;
-
-        }
-        listaSeccion = [];
-
-    }
-
-    SavedData = true;
-    MsjGopt = true;
-    setData();
-    fillTable();
-
-
-
-
-    document.querySelector("#List-Seccion").blur(); // necesario que pierda el focus para que puedan funcionar las teclas de direccion
-
-}
-
-//actualiza los datos
-const setData = () => {
-
-    periodo = getSelectedOption(document.querySelector("#List-Periodo")).value;
-    seccion = getSelectedOption(document.querySelector("#List-Seccion")).value;
-    if (periodo == "none") {
-        document.querySelector("#List-Periodo").selectedIndex = 0;
-
-    }
-    if (periodo == "none" || seccion == "none") {
-
-        document.querySelector("#CedulaAlumno").innerHTML = "";
-        document.querySelector("#NombreAlumno").innerHTML = "Selecciona un Periodo y una Sección";
-        document.querySelector("#NombreAlumno").style.color = "Red";
-        nota1.value = "";
-        nota2.value = "";
-        nota3.value = "";
-        nota1.disabled = true;
-        nota2.disabled = true;
-        nota3.disabled = true;
-        Tabla.innerHTML = "";
-
-    } else {
-
-        document.querySelector("#CedulaAlumno").innerHTML = listaSeccion[indice]["Cedula"];
-        document.querySelector("#NombreAlumno").innerHTML = listaSeccion[indice]["Nombre"];
-        nota1.value = listaSeccion[indice][seccion[0].toUpperCase() + "1"];
-        nota2.value = listaSeccion[indice][seccion[0].toUpperCase() + "2"];
-        nota3.value = listaSeccion[indice][seccion[0].toUpperCase() + "3"];
-        nota1.disabled = false;
-        nota2.disabled = false;
-        nota3.disabled = false;
-    }
-
-    getGradeAverage();
-}
-
-//determina que elemento esta seleccionado
-
 const getSelectedOption = (sel) => {
     var opt;
     for (var i = 0, len = sel.options.length; i < len; i++) {
@@ -491,131 +216,6 @@ const getSelectedOption = (sel) => {
         }
     }
     return opt;
-}
-
-//listener de los bonones siguiente y anterior
-
-const ForwardBackward = (e) => {
-
-        if (periodo != "none" && seccion != "none") {
-
-            //BS y BA son los icononos de los botones
-            if ( /*indice < indiceMax &&*/ e.target == document.getElementById("BS") || e.target == document.getElementById("btn-Siguiente") ||
-                /*e.key == "ArrowRight" ||*/
-                e.key == "ArrowDown") {
-                indice++;
-                if (indice > indiceMax) {
-                    indice = 0;
-                }
-                TextBuscar.value = "";
-                document.querySelector("#N0").focus(); //Coloca el focus en la tabla
-            }
-            if ( /*indice > 0 &&*/ e.target == document.getElementById("BA") || e.target == document.getElementById("btn-Anterior") ||
-                /*e.key == "ArrowLeft" ||*/
-                e.key == "ArrowUp") {
-                indice--;
-                if (indice < 0) {
-                    indice = indiceMax;
-                }
-                TextBuscar.value = "";
-                document.querySelector("#N0").focus(); //Coloca el focus en la tabla
-            }
-
-            setData();
-            selectedFromTable();
-        }
-    }
-    //control de periodo, 
-const setPeriodo = () => {
-        MsjGuardar.style.display = "none"; // esconde el mensaje de guardar si se cambia de perido
-        document.querySelector("#List-Seccion").selectedIndex = 0;
-        // loadEstudiantes();
-        periodoAntesQueSeccion();
-    }
-    //se debe escooger el periodo antes que la seccion, para evitar algunos bugs
-const periodoAntesQueSeccion = () => {
-
-    if (document.querySelector("#List-Periodo").selectedIndex == 0) {
-        document.querySelector("#List-Seccion").disabled = true;
-
-    } else {
-        document.querySelector("#List-Seccion").disabled = false;
-    }
-
-    if (document.querySelector("#List-Periodo").selectedIndex == 0 ||
-        document.querySelector("#List-Seccion").selectedIndex == 0) {
-        TextBuscar.disabled = true;
-    } else {
-        TextBuscar.value = "";
-        TextBuscar.disabled = false;
-    }
-
-}
-
-//verifica que los datos esten guardados
-const isSaved = () => {
-
-    if (!SavedData && MsjGopt) {
-        MsjGopt = false;
-        MsjGuardar.style.display = "block";
-    }
-
-
-}
-
-//modifica el arreglo en el lado del cliente conforme a los cambios realizados
-const getChanges = () => {
-    for (let i = 0; i < lista.length; i++) {
-        if (lista[i]["Cedula"] == document.querySelector("#CedulaAlumno").innerHTML) {
-            lista[i][seccion[0].toUpperCase() + "1"] = nota1.value;
-            lista[i][seccion[0].toUpperCase() + "2"] = nota2.value;
-            lista[i][seccion[0].toUpperCase() + "3"] = nota3.value;
-            selectEstudiantes(false);
-            SavedData = false;
-            MsjGopt = true;
-        }
-    }
-}
-
-//Guarda los cambios
-const sendData = () => {
-
-    if (getSelectedOption(document.querySelector("#List-Seccion")).value != "none" && !SavedData) {
-        document.querySelector("#List-Periodo").disabled = true; //Estro previene algunos bugs, es momentaneo mientras aprendo a como hacerlo mejor
-        xhttp = new XMLHttpRequest();
-        data = new FormData();
-        data.append("Datos", JSON.stringify(listaSeccion));
-        data.append("Materia", seccion[0].toUpperCase());
-        data.append("Periodo", periodo);
-        data.append("Type", "ADDStudent");
-        xhttp.open("POST", "/BatallaProject/Batalla/PHP/LoadData.php", true);
-
-        xhttp.addEventListener("load", () => {
-
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                SavedData = true;
-                MsjGopt = true;
-                document.querySelector("#List-Periodo").disabled = false;
-                ShowMessageAtPointer("Todas las notas han estan guardadas");
-            } else {
-                ShowMessageAtPointer("ATENCIÓN, ocurrio un problema, no se han podido guardar las notas", "Red", "White");
-            }
-        })
-        xhttp.send(data);
-
-    } else {
-        ShowMessageAtPointer("No hay nada nuevo que guardar", "var(--Color-Secundario)", "var(--Color-Principal)", "var(--Color-Principal)", 1000);
-    }
-}
-
-//llena la tabla de estudiantes
-const fillTable = () => {
-    Tabla.innerHTML = "";
-    for (i = 0; i < listaSeccion.length; i++) {
-        Tabla.innerHTML += "<tr id = 'T" + i + "'> <td class = 'td2'> <button class = 'Columna-Cedula2 CL' id='C" + i + "'> " + listaSeccion[i]["Cedula"] + " </button></td><td class = 'td2' > <button class = 'Columna-Nombre2 CL' id='N" + i + "'> " + listaSeccion[i]["Nombre"] + " </button></td><td class = 'td2'> <label class = 'ColLapso'> " + listaSeccion[i][seccion[0].toUpperCase() + "1"] + " </label></td><td class = 'td2'> <label class = 'ColLapso'> " + listaSeccion[i][seccion[0].toUpperCase() + "2"] + " </label></td><td class = 'td2'> <label class = 'ColLapso'> " + listaSeccion[i][seccion[0].toUpperCase() + "3"] + " </label></td></tr>";
-    }
-    selectedFromTable();
-
 }
 
 //marca un elemento de la tabla conforme el indicee vigente .... tambien selecciona un elemeto al hacer click en el
@@ -629,7 +229,6 @@ const selectedFromTable = () => {
     document.getElementById("T" + indice).classList.add("tdSelected");
 
 }
-
 //al dar click en un estudiante de la tabla, lo selecciona
 const pickFromTable = (e) => {
 
@@ -640,47 +239,5 @@ const pickFromTable = (e) => {
         setData();
     }
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//tutorial de ayuda al iniciar el programa
-const tuto1 = () => {
-    let mensaje = document.querySelector("#tuto1");
-    let mensaje2 = document.querySelector("#tuto2");
-
-    setTimeout(() => {
-        if (getSelectedOption(document.querySelector("#List-Periodo")).value == "none") {
-            mensaje.style.display = "block";
-            mensaje2.style.display = "none";
-
-        } else {
-            mensaje.style.display = "none";
-            setTimeout(() => {
-
-                if (getSelectedOption(document.querySelector("#List-Seccion")).value == "none") {
-
-                    mensaje2.style.display = "block";
-                } else {
-                    mensaje2.style.display = "none";
-                }
-
-            }, 1000);
-        }
-    }, 3000);
-
-    if (getSelectedOption(document.querySelector("#List-Periodo")).value != "none") {
-        mensaje.style.display = "none";
-    }
-    if (getSelectedOption(document.querySelector("#List-Periodo")).value == "none" &&
-        getSelectedOption(document.querySelector("#List-Seccion")).value == "none") {
-        mensaje2.style.display = "none";
-    }
-}
-
-const saveMessageButtons = (e) => {
-
-    if (e.target == btnSiGuardar) {
-        sendData();
-    }
-
-
-    MsjGuardar.style.display = "none";
-}

@@ -60,7 +60,6 @@ const events = () => {
     inputdata[1].addEventListener("blur", NotaLostFocus);
     inputdata[2].addEventListener("blur", NotaLostFocus);
     TextBuscar.addEventListener("keyup", fillHint);
-
     document.querySelector("#List-Seccion").addEventListener("change", setData);
     document.querySelector("#List-Periodo").addEventListener("change", changePeriodo);
     btnLimpiar.addEventListener("click", () => {
@@ -204,16 +203,16 @@ const getGradeAverage = () => {
     document.getElementById("Nota-Acumulada").value = Math.round((n1 + n2 + n3) / 3);
 }
 
-const getSelectedOption = (sel) => {
-    var opt;
-    for (var i = 0, len = sel.options.length; i < len; i++) {
-        opt = sel.options[i];
-        if (opt.selected === true) {
-            break;
-        }
-    }
-    return opt;
-}
+// const getSelectedOption = (sel) => {
+//     var opt;
+//     for (var i = 0, len = sel.options.length; i < len; i++) {
+//         opt = sel.options[i];
+//         if (opt.selected === true) {
+//             break;
+//         }
+//     }
+//     return opt;
+// }
 
 //marca un elemento de la tabla conforme el indicee vigente .... tambien selecciona un elemeto al hacer click en el
 const selectedFromTable = () => {
@@ -415,20 +414,21 @@ function setLitaSeccion(){
         }
     }
 }
-
+//llena la tabla
 function fillTable(){
     Tabla.innerHTML ="";
     for(let i= 0 ; i < listaSeccion.length ; i++){
-
         Tabla.innerHTML += 
-        `<tr>
-            <td><label class="Columna-Cedula2">${listaSeccion[i]["Cedula"]}</label></td>
-            <td><label class="Columna-Nombre2"> ${listaSeccion[i]["Nombre"]}</label></td>
-            <td><label class="ColLapso">${listaSeccion[indice][seccion[0].toUpperCase()+"1"]}</label></td>
-            <td><label class="ColLapso">${listaSeccion[indice][seccion[0].toUpperCase()+"2"]}</label></td>
-            <td><label class="ColLapso">${listaSeccion[indice][seccion[0].toUpperCase()+"3"]}</label></td>
+        `<tr id="T${i}">
+            <td class = 'td2'><button class="Columna-Cedula2 CL" id="C${i}">${listaSeccion[i]["Cedula"]}</button></td>
+            <td class = 'td2'><button class="Columna-Nombre2 CL"id="N${i}"> ${listaSeccion[i]["Nombre"]}</button></td>
+            <td class = 'td2'><label class="ColLapso">${listaSeccion[i][seccion[0].toUpperCase()+"1"]}</label></td>
+            <td class = 'td2'><label class="ColLapso">${listaSeccion[i][seccion[0].toUpperCase()+"2"]}</label></td>
+            <td class = 'td2'><label class="ColLapso">${listaSeccion[i][seccion[0].toUpperCase()+"3"]}</label></td>
         </tr>`
     }
+    selectedFromTable();
+
 }
 
 function setData(){
@@ -462,5 +462,4 @@ function setData(){
         TextBuscar.disabled = true;
         document.getElementById("Nota-Acumulada").value = "";
     }
-
 }

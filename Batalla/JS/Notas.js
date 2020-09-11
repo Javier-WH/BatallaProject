@@ -2,7 +2,6 @@ let lblnota1, lblnota2, lblnota3;
 let nota1, nota2, nota3;
 let lblInputData, inputdata;
 let btnLimpiar;
-
 let indiceMax;
 let innerUserData;
 let seccion;
@@ -15,12 +14,13 @@ let MsjGuardar;
 let btnSiGuardar;
 let btnNoGuardar;
 /////////////////////////////
+let loadCharge = 0;
 let indice = 0;
-let listaMaterias = [];
+let Periodos = [];
 let lista = [];
 let listaSeccion = [];
 let requestTime = 1000;
-let ListaCodigos;
+let ListaCodigos = [];
 let ListaPeriodos;
 let ListaSecciones;
 let ListaEstudiantes;
@@ -29,8 +29,7 @@ let ListaEstudiantes;
 window.addEventListener("load", () => {
 
     initialize(); //inicializa todos los elementos
-  
-
+    LoadingScreen();
 
 
     events();
@@ -73,31 +72,31 @@ const events = () => {
 
 //inicializa todas las variables
 const initialize = () => {
-        let opt = document.querySelector("#List-Periodo");
+    let opt = document.querySelector("#List-Periodo");
 
-        ListaPeriodos = new Conection("periodo"); //para obtener la lista de periodos disponibles
-        ListaCodigos = new Conection("MateriaCode"); //para obtener la lista de codigos de materias
-        ListaSecciones = new Conection("seccion"); //para obtener la lista se secciones del profesor en cuestion
-        ListaEstudiantes = new Conection("ListaAlumnosCompleta", "_p_2020", null); //carga la lista de estudiantes de un periodo
+    ListaPeriodos = new Conection("periodo"); //para obtener la lista de periodos disponibles
+    ListaCodigos = new Conection("MateriaCode"); //para obtener la lista de codigos de materias
+    ListaSecciones = new Conection("seccion"); //para obtener la lista se secciones del profesor en cuestion
+    ListaEstudiantes = new Conection("ListaAlumnosCompleta", "_p_2020", null); //carga la lista de estudiantes de un periodo
 
-        nota1 = document.getElementById("Nota1");
-        nota2 = document.getElementById("Nota2");
-        nota3 = document.getElementById("Nota3");
-        lblnota1 = document.getElementById("lblNota1");
-        lblnota2 = document.getElementById("lblNota2");
-        lblnota3 = document.getElementById("lblNota3");
-        lblInputData = document.getElementsByClassName("lblinputData");
-        inputdata = document.getElementsByClassName("input-data");
-        btnLimpiar = document.querySelector("#btn-Limpiar2");
-        Tabla = document.querySelector("#nomina2");
-        Hint = document.querySelector("#Hints");
-        TextBuscar = document.querySelector("#txtBuscarAlumno");
-        MsjGuardar = document.querySelector("#MensajeGuardar");
-        btnSiGuardar = document.querySelector("#btnSiGuardar");
-        btnNoGuardar = document.querySelector("#btnNoGuardar");
+    nota1 = document.getElementById("Nota1");
+    nota2 = document.getElementById("Nota2");
+    nota3 = document.getElementById("Nota3");
+    lblnota1 = document.getElementById("lblNota1");
+    lblnota2 = document.getElementById("lblNota2");
+    lblnota3 = document.getElementById("lblNota3");
+    lblInputData = document.getElementsByClassName("lblinputData");
+    inputdata = document.getElementsByClassName("input-data");
+    btnLimpiar = document.querySelector("#btn-Limpiar2");
+    Tabla = document.querySelector("#nomina2");
+    Hint = document.querySelector("#Hints");
+    TextBuscar = document.querySelector("#txtBuscarAlumno");
+    MsjGuardar = document.querySelector("#MensajeGuardar");
+    btnSiGuardar = document.querySelector("#btnSiGuardar");
+    btnNoGuardar = document.querySelector("#btnNoGuardar");
 
-    }
-    //posiciona la sugerencia de ayuda debajo del input buscar alumno (Motor de busqueda)
+}
+//posiciona la sugerencia de ayuda debajo del input buscar alumno (Motor de busqueda)
 const adjustHint = () => {
     Hint.style.top = (TextBuscar.offsetTop + 20) + "px";
     Hint.style.left = TextBuscar.offsetLeft + "px";
@@ -240,4 +239,137 @@ const pickFromTable = (e) => {
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//secuencia de carga inicial
+function LoadingScreen() {
+    getPeriodos();
+    getCodigosMateria();
+    getListaSecciones();
+    getListaEstudantes();
+    checkLoad();
+}
+
+//Revisa que las listas y arrays necesarios cargen al iniciar 
+function checkLoad() {
+    document.querySelector("#LoadingScreen").style.display = "block";
+    if (Periodos.length != 0 && ListaCodigos.length != 0 && listaSeccion != 0 && lista != 0) {
+        document.querySelector("#LoadingScreen").style.display = "none";
+        setPeriodos();
+        setSecciones();
+    }
+    else {
+        setTimeout(() => {
+            checkLoad();
+        }, requestTime);
+    }
+}
+
+function getPeriodos() {
+    let Per = ListaPeriodos.getResponse;
+    if (Per == "Error") {
+        setTimeout(() => {
+            getPeriodos();
+        }, requestTime);
+    } else {
+        Periodos = Per;
+        loadCharge += 25;
+    }
+}
+
+function getCodigosMateria() {
+    let codes = ListaCodigos.getResponse;
+    if (codes == "Error") {
+        setTimeout(() => {
+            getCodigosMateria()
+        }, requestTime);
+    } else {
+        ListaCodigos = codes;
+        loadCharge += 25;
+    }
+}
+function getListaSecciones() {
+    let secciones = ListaSecciones.getResponse;
+    if (secciones == "Error") {
+        setTimeout(() => {
+            getListaSecciones();
+        }, requestTime);
+    } else {
+        listaSeccion = secciones;
+        loadCharge += 25;
+    }
+}
+
+function getListaEstudantes() {
+    let nomina = ListaEstudiantes.getResponse;
+    if (nomina == "Error") {
+        setTimeout(() => {
+            getListaEstudantes();
+        }, requestTime);
+    } else {
+        lista = nomina;
+        loadCharge += 25;
+    }
+}
+
+//traduce el condigo de la materia
+function deCodeSeccion(code) {
+    let Materia, Grado, Seccion;
+
+    for (let i = 0; i < ListaCodigos.length; i++) {
+        if (ListaCodigos[i]["Code"] == code[0].toUpperCase()) {
+            Materia = ListaCodigos[i]["Materia"];
+            break;
+        }
+    }
+    switch (code[1]) {
+        case "1":
+            Grado = "Primer año"
+            break;
+        case "2":
+            Grado = "Segundo año"
+            break;
+        case "3":
+            Grado = "Tercer año"
+            break;
+        case "4":
+            Grado = "Cuarto año"
+            break;
+        case "5":
+            Grado = "Quinto año"
+            break;
+        default:
+            Grado = "Desconocido"
+            break;
+    }
+
+    Seccion = code[2].toUpperCase();
+
+    return Materia + " - " + Grado + " ("+ Seccion+")";
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+//llena el dropbox periodos
+
+function setPeriodos() {
+    let lisTPeriodo = document.querySelector("#List-Periodo");
+    lisTPeriodo.innerHTML = "";
+    for (i = Periodos.length - 1; i >= 0; i--) {
+        lisTPeriodo.innerHTML += `<option value="${Periodos[i]["Periodos"]}">${Periodos[i]["Periodos"].substring(3)}</option>`;
+    }
+    periodo = lisTPeriodo.options[lisTPeriodo.selectedIndex].value;
+}
+//llena el dropbox de las secciones
+function setSecciones() {
+    let lisTSeccion = document.querySelector("#List-Seccion");
+    lisTSeccion.innerHTML = "";
+    for (let i = 1; i <= 10; i++) {
+
+        if (listaSeccion[`Mat${i}`] != "") {
+            lisTSeccion.innerHTML += `<option value="${listaSeccion[`Mat${i}`]}">${deCodeSeccion(listaSeccion[`Mat${i}`])}</option>`;
+        }
+    }
+    seccion = lisTSeccion.options[lisTSeccion.selectedIndex].value;
+}
 

@@ -67,7 +67,8 @@ const events = () => {
         Hint.style.display = "none";
         TextBuscar.focus();
     });
-
+    TextBuscar.addEventListener("blur", ()=> Hint.style.display = "none");
+    TextBuscar.addEventListener("focus", ()=> Hint.style.display = "block");
     window.addEventListener("keydown", ForwardBackward);
     document.getElementById("BS").addEventListener("click", ForwardBackward);
     document.getElementById("BA").addEventListener("click", ForwardBackward);
@@ -98,7 +99,7 @@ const initialize = () => {
         MsjGuardar = document.querySelector("#MensajeGuardar");
         btnSiGuardar = document.querySelector("#btnSiGuardar");
         btnNoGuardar = document.querySelector("#btnNoGuardar");
-
+        nota1.addEventListener("change", updateListSeccion);
     }
     //posiciona la sugerencia de ayuda debajo del input buscar alumno (Motor de busqueda)
 const adjustHint = () => {
@@ -208,16 +209,6 @@ const getGradeAverage = () => {
     document.getElementById("Nota-Acumulada").value = Math.round((n1 + n2 + n3) / 3);
 }
 
-// const getSelectedOption = (sel) => {
-//     var opt;
-//     for (var i = 0, len = sel.options.length; i < len; i++) {
-//         opt = sel.options[i];
-//         if (opt.selected === true) {
-//             break;
-//         }
-//     }
-//     return opt;
-// }
 
 //marca un elemento de la tabla conforme el indicee vigente .... tambien selecciona un elemeto al hacer click en el
 const selectedFromTable = () => {
@@ -496,8 +487,13 @@ const ForwardBackward = (e) => {
             TextBuscar.value = "";
             document.querySelector("#N0").focus(); //Coloca el focus en la tabla
         }
-
         setData();
         selectedFromTable();
     }
+}
+
+function updateListSeccion() {
+    let cedula = listaSeccion[indice]["Cedula"];
+    console.log(cedula);
+
 }

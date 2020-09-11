@@ -5,7 +5,7 @@ let btnLimpiar;
 let indiceMax;
 let innerUserData;
 let seccion;
-let periodo;
+let periodo = null;
 let SavedData = true;
 let Tabla;
 let Hint;
@@ -61,8 +61,7 @@ const events = () => {
     inputdata[2].addEventListener("blur", NotaLostFocus);
     TextBuscar.addEventListener("keyup", fillHint);
 
-
-
+    document.querySelector("#List-Seccion").addEventListener("change", setData);
     btnLimpiar.addEventListener("click", () => {
         TextBuscar.value = "";
         Hint.style.display = "none";
@@ -256,6 +255,7 @@ function checkLoad() {
         document.querySelector("#LoadingScreen").style.display = "none";
         setPeriodos();
         setSecciones();
+        setData();
     }
     else {
         setTimeout(() => {
@@ -273,6 +273,7 @@ function getPeriodos() {
     } else {
         Periodos = Per;
         loadCharge += 25;
+        setPeriodos();
     }
 }
 
@@ -347,7 +348,6 @@ function deCodeSeccion(code) {
     return Materia + " - " + Grado + " ("+ Seccion+")";
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////////////
 
 //llena el dropbox periodos
@@ -373,3 +373,52 @@ function setSecciones() {
     seccion = lisTSeccion.options[lisTSeccion.selectedIndex].value;
 }
 
+//
+function setLitaSeccion(){
+    let lisTPeriodo = document.querySelector("#List-Periodo");
+    let lisTSeccion = document.querySelector("#List-Seccion");
+    seccion = lisTSeccion.options[lisTSeccion.selectedIndex].value;
+    periodo = lisTPeriodo.options[lisTPeriodo.selectedIndex].value;
+
+    listaSeccion = [];
+    for(let i = 0 ; i < lista.length ; i++){
+        if(lista[i]["Seccion"] == seccion[2] && lista[i]["Grado"]==seccion[1]){
+            listaSeccion.push(lista[i]);
+        }
+    }
+}
+
+function fillTable(){
+    Tabla.innerHTML ="";
+    for(let i= 0 ; i < listaSeccion.length ; i++){
+
+        Tabla.innerHTML += 
+        `<tr>
+            <td><label class="Columna-Cedula2">${listaSeccion[i]["Cedula"]}</label></td>
+            <td><label class="Columna-Nombre2"> ${listaSeccion[i]["Nombre"]}</label></td>
+            <td><label class="ColLapso">${listaSeccion[indice][seccion[0].toUpperCase()+"1"]}</label></td>
+            <td><label class="ColLapso">${listaSeccion[indice][seccion[0].toUpperCase()+"2"]}</label></td>
+            <td><label class="ColLapso">${listaSeccion[indice][seccion[0].toUpperCase()+"3"]}</label></td>
+        </tr>`
+
+    }
+
+
+
+}
+
+
+function setData(){
+    
+    setLitaSeccion();
+    let NombreAlumno = document.querySelector("#NombreAlumno");
+    let CedulaAlumno = document.querySelector("#CedulaAlumno");
+    NombreAlumno.innerHTML=listaSeccion[indice]["Nombre"];
+    CedulaAlumno.innerHTML=listaSeccion[indice]["Cedula"];
+    nota1.value=listaSeccion[indice][seccion[0].toUpperCase()+"1"];
+    nota2.value=listaSeccion[indice][seccion[0].toUpperCase()+"2"];
+    nota3.value=listaSeccion[indice][seccion[0].toUpperCase()+"3"];
+    
+
+    fillTable();
+}

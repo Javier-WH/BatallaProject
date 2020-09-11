@@ -62,6 +62,7 @@ const events = () => {
     TextBuscar.addEventListener("keyup", fillHint);
 
     document.querySelector("#List-Seccion").addEventListener("change", setData);
+    document.querySelector("#List-Periodo").addEventListener("change", changePeriodo);
     btnLimpiar.addEventListener("click", () => {
         TextBuscar.value = "";
         Hint.style.display = "none";
@@ -71,31 +72,31 @@ const events = () => {
 
 //inicializa todas las variables
 const initialize = () => {
-    let opt = document.querySelector("#List-Periodo");
+        let opt = document.querySelector("#List-Periodo");
 
-    ListaPeriodos = new Conection("periodo"); //para obtener la lista de periodos disponibles
-    ListaCodigos = new Conection("MateriaCode"); //para obtener la lista de codigos de materias
-    ListaSecciones = new Conection("seccion"); //para obtener la lista se secciones del profesor en cuestion
-    ListaEstudiantes = new Conection("ListaAlumnosCompleta", "_p_2020", null); //carga la lista de estudiantes de un periodo
+        ListaPeriodos = new Conection("periodo"); //para obtener la lista de periodos disponibles
+        ListaCodigos = new Conection("MateriaCode"); //para obtener la lista de codigos de materias
+        ListaSecciones = new Conection("seccion"); //para obtener la lista se secciones del profesor en cuestion
+        ListaEstudiantes = new Conection("ListaAlumnosCompleta", "_p_2020", null); //carga la lista de estudiantes de un periodo
 
-    nota1 = document.getElementById("Nota1");
-    nota2 = document.getElementById("Nota2");
-    nota3 = document.getElementById("Nota3");
-    lblnota1 = document.getElementById("lblNota1");
-    lblnota2 = document.getElementById("lblNota2");
-    lblnota3 = document.getElementById("lblNota3");
-    lblInputData = document.getElementsByClassName("lblinputData");
-    inputdata = document.getElementsByClassName("input-data");
-    btnLimpiar = document.querySelector("#btn-Limpiar2");
-    Tabla = document.querySelector("#nomina2");
-    Hint = document.querySelector("#Hints");
-    TextBuscar = document.querySelector("#txtBuscarAlumno");
-    MsjGuardar = document.querySelector("#MensajeGuardar");
-    btnSiGuardar = document.querySelector("#btnSiGuardar");
-    btnNoGuardar = document.querySelector("#btnNoGuardar");
+        nota1 = document.getElementById("Nota1");
+        nota2 = document.getElementById("Nota2");
+        nota3 = document.getElementById("Nota3");
+        lblnota1 = document.getElementById("lblNota1");
+        lblnota2 = document.getElementById("lblNota2");
+        lblnota3 = document.getElementById("lblNota3");
+        lblInputData = document.getElementsByClassName("lblinputData");
+        inputdata = document.getElementsByClassName("input-data");
+        btnLimpiar = document.querySelector("#btn-Limpiar2");
+        Tabla = document.querySelector("#nomina2");
+        Hint = document.querySelector("#Hints");
+        TextBuscar = document.querySelector("#txtBuscarAlumno");
+        MsjGuardar = document.querySelector("#MensajeGuardar");
+        btnSiGuardar = document.querySelector("#btnSiGuardar");
+        btnNoGuardar = document.querySelector("#btnNoGuardar");
 
-}
-//posiciona la sugerencia de ayuda debajo del input buscar alumno (Motor de busqueda)
+    }
+    //posiciona la sugerencia de ayuda debajo del input buscar alumno (Motor de busqueda)
 const adjustHint = () => {
     Hint.style.top = (TextBuscar.offsetTop + 20) + "px";
     Hint.style.left = TextBuscar.offsetLeft + "px";
@@ -126,9 +127,7 @@ const fillHint = () => {
 
     for (let i = 0; i < hints.length; i++) {
         hints[i].addEventListener("click", (e) => {
-
             indice = e.target.value;
-
             setData();
             selectedFromTable();
             TextBuscar.value = document.querySelector("#NombreAlumno").innerHTML;
@@ -139,11 +138,11 @@ const fillHint = () => {
 
 //previene que se incremente la nota al pisar arriba o abajo
 const preventkeyUpKeyDown = (e) => {
-    if (e.key == "ArrowUp" || e.key == "ArrowDown") {
-        e.preventDefault();
+        if (e.key == "ArrowUp" || e.key == "ArrowDown") {
+            e.preventDefault();
+        }
     }
-}
-//complemento animacion cuando ganan focus
+    //complemento animacion cuando ganan focus
 const NotaGainFocus = (e) => {
     if (e.target == nota1) {
         lblnota1.style.color = " var(--Color-Principal)";
@@ -219,25 +218,25 @@ const getSelectedOption = (sel) => {
 //marca un elemento de la tabla conforme el indicee vigente .... tambien selecciona un elemeto al hacer click en el
 const selectedFromTable = () => {
 
-    for (let i = 0; i < listaSeccion.length; i++) {
-        document.getElementById("T" + i).classList.remove("tdSelected")
-        document.getElementById("T" + i).addEventListener("click", pickFromTable);
+        for (let i = 0; i < listaSeccion.length; i++) {
+            document.getElementById("T" + i).classList.remove("tdSelected")
+            document.getElementById("T" + i).addEventListener("click", pickFromTable);
+
+        }
+        document.getElementById("T" + indice).classList.add("tdSelected");
 
     }
-    document.getElementById("T" + indice).classList.add("tdSelected");
-
-}
-//al dar click en un estudiante de la tabla, lo selecciona
+    //al dar click en un estudiante de la tabla, lo selecciona
 const pickFromTable = (e) => {
 
-    target = e.target.id;
-    if (target[0] == "C" || target[0] == "N") {
-        indice = target.substring(1);
-        selectedFromTable();
-        setData();
+        target = e.target.id;
+        if (target[0] == "C" || target[0] == "N") {
+            indice = target.substring(1);
+            selectedFromTable();
+            setData();
+        }
     }
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //secuencia de carga inicial
 function LoadingScreen() {
@@ -256,8 +255,7 @@ function checkLoad() {
         setPeriodos();
         setSecciones();
         setData();
-    }
-    else {
+    } else {
         setTimeout(() => {
             checkLoad();
         }, requestTime);
@@ -288,6 +286,7 @@ function getCodigosMateria() {
         loadCharge += 25;
     }
 }
+
 function getListaSecciones() {
     let secciones = ListaSecciones.getResponse;
     if (secciones == "Error") {
@@ -311,6 +310,25 @@ function getListaEstudantes() {
         loadCharge += 25;
     }
 }
+
+function changePeriodo() {
+    let lisTP = document.querySelector("#List-Periodo");
+    periodo = lisTP.options[lisTP.selectedIndex].value;
+    ListaEstudiantes = new Conection("ListaAlumnosCompleta", periodo, null)
+
+    document.querySelector("#List-Seccion").disabled = true;
+    lisTP.disabled = true;
+    getListaEstudantes();
+    ShowMessageAtPointer("Espere un momento por favor", "var(--Color-Secundario)", "var(--Color-Principal)", "var(--Color-Principal)", 2000);
+    setTimeout(() => {
+        setData();
+        document.querySelector("#List-Seccion").disabled = false;
+        lisTP.disabled = false;
+        console.log(periodo);
+    }, 2000);
+
+}
+
 
 //traduce el condigo de la materia
 function deCodeSeccion(code) {
@@ -345,7 +363,7 @@ function deCodeSeccion(code) {
 
     Seccion = code[2].toUpperCase();
 
-    return Materia + " - " + Grado + " ("+ Seccion+")";
+    return Materia + " - " + Grado + " (" + Seccion + ")";
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -373,17 +391,27 @@ function setSecciones() {
     seccion = lisTSeccion.options[lisTSeccion.selectedIndex].value;
 }
 
-//
+//filtra los datos de lista por seccion y grado y llena listaseccion
 function setLitaSeccion(){
+    let fillListaSeccion = false;
     let lisTPeriodo = document.querySelector("#List-Periodo");
     let lisTSeccion = document.querySelector("#List-Seccion");
     seccion = lisTSeccion.options[lisTSeccion.selectedIndex].value;
     periodo = lisTPeriodo.options[lisTPeriodo.selectedIndex].value;
-
+    
     listaSeccion = [];
     for(let i = 0 ; i < lista.length ; i++){
         if(lista[i]["Seccion"] == seccion[2] && lista[i]["Grado"]==seccion[1]){
-            listaSeccion.push(lista[i]);
+            fillListaSeccion = true;
+            break;
+        }
+    }   
+    if (fillListaSeccion)
+    {
+        for(let i = 0 ; i < lista.length ; i++){
+            if(lista[i]["Seccion"] == seccion[2] && lista[i]["Grado"]==seccion[1]){
+                listaSeccion.push(lista[i]);
+            }
         }
     }
 }
@@ -400,25 +428,39 @@ function fillTable(){
             <td><label class="ColLapso">${listaSeccion[indice][seccion[0].toUpperCase()+"2"]}</label></td>
             <td><label class="ColLapso">${listaSeccion[indice][seccion[0].toUpperCase()+"3"]}</label></td>
         </tr>`
-
     }
-
-
-
 }
 
-
 function setData(){
-    
     setLitaSeccion();
     let NombreAlumno = document.querySelector("#NombreAlumno");
     let CedulaAlumno = document.querySelector("#CedulaAlumno");
-    NombreAlumno.innerHTML=listaSeccion[indice]["Nombre"];
-    CedulaAlumno.innerHTML=listaSeccion[indice]["Cedula"];
-    nota1.value=listaSeccion[indice][seccion[0].toUpperCase()+"1"];
-    nota2.value=listaSeccion[indice][seccion[0].toUpperCase()+"2"];
-    nota3.value=listaSeccion[indice][seccion[0].toUpperCase()+"3"];
-    
 
-    fillTable();
+    if(listaSeccion.length != 0){
+        NombreAlumno.innerHTML=listaSeccion[indice]["Nombre"];
+        CedulaAlumno.innerHTML=listaSeccion[indice]["Cedula"];
+        nota1.value=listaSeccion[indice][seccion[0].toUpperCase()+"1"];
+        nota2.value=listaSeccion[indice][seccion[0].toUpperCase()+"2"];
+        nota3.value=listaSeccion[indice][seccion[0].toUpperCase()+"3"];
+        fillTable();
+        nota1.disabled = false;
+        nota2.disabled = false;
+        nota3.disabled = false;
+        TextBuscar.disabled = false;
+        getGradeAverage();
+    }
+    else{
+        NombreAlumno.innerHTML= "No se encontraron Alumnos";
+        CedulaAlumno.innerHTML= "";
+        nota1.value= "";
+        nota2.value= "";
+        nota3.value= "";
+        Tabla.innerHTML ="";
+        nota1.disabled = true;
+        nota2.disabled = true;
+        nota3.disabled = true;
+        TextBuscar.disabled = true;
+        document.getElementById("Nota-Acumulada").value = "";
+    }
+
 }

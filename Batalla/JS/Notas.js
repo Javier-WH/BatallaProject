@@ -67,6 +67,11 @@ const events = () => {
         Hint.style.display = "none";
         TextBuscar.focus();
     });
+
+    window.addEventListener("keydown", ForwardBackward);
+    document.getElementById("BS").addEventListener("click", ForwardBackward);
+    document.getElementById("BA").addEventListener("click", ForwardBackward);
+
 }
 
 //inicializa todas las variables
@@ -413,6 +418,7 @@ function setLitaSeccion(){
             }
         }
     }
+    indiceMax = listaSeccion.length-1;
 }
 //llena la tabla
 function fillTable(){
@@ -430,7 +436,7 @@ function fillTable(){
     selectedFromTable();
 
 }
-
+//Renderisa los datos
 function setData(){
     setLitaSeccion();
     let NombreAlumno = document.querySelector("#NombreAlumno");
@@ -461,5 +467,37 @@ function setData(){
         nota3.disabled = true;
         TextBuscar.disabled = true;
         document.getElementById("Nota-Acumulada").value = "";
+    }
+}
+
+//control botones adelante y atras
+const ForwardBackward = (e) => {
+
+    if (periodo != "none" && seccion != "none") {
+
+        //BS y BA son los icononos de los botones
+        if ( /*indice < indiceMax &&*/ e.target == document.getElementById("BS") || e.target == document.getElementById("btn-Siguiente") ||
+            /*e.key == "ArrowRight" ||*/
+            e.key == "ArrowDown") {
+            indice++;
+            if (indice > indiceMax) {
+                indice = 0;
+            }
+            TextBuscar.value = "";
+            document.querySelector("#N0").focus(); //Coloca el focus en la tabla
+        }
+        if ( /*indice > 0 &&*/ e.target == document.getElementById("BA") || e.target == document.getElementById("btn-Anterior") ||
+            /*e.key == "ArrowLeft" ||*/
+            e.key == "ArrowUp") {
+            indice--;
+            if (indice < 0) {
+                indice = indiceMax;
+            }
+            TextBuscar.value = "";
+            document.querySelector("#N0").focus(); //Coloca el focus en la tabla
+        }
+
+        setData();
+        selectedFromTable();
     }
 }

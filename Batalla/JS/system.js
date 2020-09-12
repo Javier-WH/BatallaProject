@@ -2,21 +2,6 @@ const ConnectionTime = 1500;
 let test;
 let count = 0;
 
-// function setStudensList() {
-//     let list = test.getResponse;
-//     if (list == "Error") {
-//         setTimeout(() => {
-//             count++;
-//             console.log(count);
-//             setStudensList();
-//         }, 1000);
-//     } else {
-//         document.querySelector("#LoadingScreen").style.display = "none";
-//         console.log(list);
-//     }
-// }
-
-
 class Conection {
     constructor(ConnType, Periodo = null) {
         this.response = null;

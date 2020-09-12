@@ -32,6 +32,9 @@ if (!isset($_SESSION["User"]) || !isset($_SESSION["Name"]) || !isset($_SESSION["
 </head>
 
 <body>
+    <div id="LoadingScreen">
+            <object data="../SVG/BatallaLogo.svg" id="logoLoadinScreen"></object>
+    </div>
     <div id="programa">
         <header>
             <div id="contenedor-logo"> <object data="../SVG/BatallaLogo.svg" id="logo"></object> </div>
@@ -183,47 +186,12 @@ if (!isset($_SESSION["User"]) || !isset($_SESSION["Name"]) || !isset($_SESSION["
     </div>
     <!--  -->
     <!--  -->
-    <div id="LoadingScreen">
-            <object data="../SVG/BatallaLogo.svg" id="logoLoadinScreen"></object>
-       
-
-    </div>
 
     <div id="Hints"></div>
     <!--  -->
     <div class="FJ_errorPointer"></div>
     <!--  -->
-    <div id="tuto1">Seleccione un Periodo Escolar
-        <div class="relative">
-            <svg class="iconoFlechaArriba" viewBox="0 0 20 20">
-                <script>
-                    document.write(icono_arriba);
-                </script>
-            </svg>
-        </div>
-    </div>
-    <!--  -->
-    <div id="tuto2">Seleccione una seccion
-        <div class="relative">
-            <svg class="iconoFlechaAbajo" viewBox="0 0 20 20">
-                <script>
-                    document.write(icono_abajo);
-                </script>
-            </svg>
-        </div>
-    </div>
-    <div id="MensajeGuardar">
-        <div id="MensajeGuardar-Interno" class="relative">
-            <div id="MensajeGuardar-Texto">
-                Advertencia, si cambia de periodo perderán todos los datos NO guardados <br><br>
-                ¿Desea Guardar los Cambios?
-            </div>
-            <div id="contenedorBotonesMensajeGuardar">
-                <button id="btnSiGuardar">Si</button>
-                <button id="btnNoGuardar">No</button>
-            </div>
-        </div>
-    </div>
+
 
 </body>
 

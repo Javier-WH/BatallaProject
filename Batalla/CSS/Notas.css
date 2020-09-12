@@ -31,7 +31,6 @@ header {
     left: 150px;
     color: var(--Color-Principal);
     background-color: var(--Color-Secundario);
-    /* width: 100%; */
     padding-top: 30px;
     pointer-events: none;
 }
@@ -502,11 +501,3 @@ body {
         border-top: 4px solid var(--Color-Contraste);
     }
 }
-
-
-/* @media(max-width: 1370px) {
-  
-    body{
-        zoom: 85%;
-    }
-} */

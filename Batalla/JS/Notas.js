@@ -3,14 +3,12 @@ let nota1, nota2, nota3;
 let lblInputData, inputdata;
 let btnLimpiar;
 let indiceMax;
-let innerUserData;
 let seccion;
 let periodo = null;
 let SavedData = true;
 let Tabla;
 let Hint;
 let TextBuscar;
-let MsjGuardar;
 /////////////////////////////
 let loadCharge = 0;
 let indice = 0;
@@ -32,9 +30,9 @@ window.addEventListener("load", () => {
 
 
     events();
-    getGradeAverage();
     adjustHint();
-    adjustSaveMessage();
+    getGradeAverage();
+    adjustlogoload();
     Hint.style.display = "none";
 
 })
@@ -106,19 +104,19 @@ const initialize = () => {
         Tabla = document.querySelector("#nomina2");
         Hint = document.querySelector("#Hints");
         TextBuscar = document.querySelector("#txtBuscarAlumno");
-        MsjGuardar = document.querySelector("#MensajeGuardar");
         btnSiGuardar = document.querySelector("#btnSiGuardar");
         btnNoGuardar = document.querySelector("#btnNoGuardar");
 
     }
     //posiciona la sugerencia de ayuda debajo del input buscar alumno (Motor de busqueda)
+
 const adjustHint = () => {
     Hint.style.top = (TextBuscar.offsetTop + 20) + "px";
     Hint.style.left = TextBuscar.offsetLeft + "px";
-}
-const adjustSaveMessage = () => {
 
-    MsjGuardar.style.top = ((window.innerHeight / 2) - (200)) + "px";
+}
+const adjustlogoload = () => {
+
     let logoLoad = document.querySelector("#logoLoadinScreen");
     logoLoad.style.top = ((window.innerHeight / 2) - (logoLoad.offsetHeight / 2)) + "px";
 
@@ -200,6 +198,7 @@ const NotaLostFocus = (e) => {
         }
         if (e.target.value == "" || e.target.value < 0) {
             e.target.value = 0;
+            updateListSeccion();
         }
     }
     getGradeAverage();
@@ -263,10 +262,9 @@ function LoadingScreen() {
 
 //Revisa que las listas y arrays necesarios cargen al iniciar 
 function checkLoad() {
-    document.querySelector("#programa").style.display = "none";
+
     document.querySelector("#LoadingScreen").style.display = "block";
     if (Periodos.length != 0 && ListaCodigos.length != 0 && listaSeccion != 0 && lista != 0) {
-        document.querySelector("#programa").style.display = "block";
         document.querySelector("#LoadingScreen").style.display = "none"; //////////<<<<===============
         setPeriodos();
         setSecciones();

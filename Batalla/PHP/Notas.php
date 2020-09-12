@@ -66,7 +66,7 @@ if (!isset($_SESSION["User"]) || !isset($_SESSION["Name"]) || !isset($_SESSION["
                 <div id="Contenedor-Buscar-Alumno" class="contenedor">
 
                     <div>
-                        <label for="txtBuscarAlumno" class="lblinputData">Buscar Alumno</label>
+                        <label for="txtBuscarAlumno" class="lblinputData">Buscar Estudiante</label>
                         <input type="text" class="input-data" id="txtBuscarAlumno" name="txtBuscarAlumno" autocomplete="off">
                     </div>
                     <div>
@@ -83,7 +83,7 @@ if (!isset($_SESSION["User"]) || !isset($_SESSION["Name"]) || !isset($_SESSION["
                 <div id="Contenedor-Datos-Alumno" class="contenedor">
                     <table id="table1">
                         <tr>
-                            <th colspan="3"> <label>Datos del Alumno</label> </th>
+                            <th colspan="3"> <label>Datos del Estudiante</label> </th>
                         </tr>
                         <tr>
 

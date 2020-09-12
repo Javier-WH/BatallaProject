@@ -471,7 +471,7 @@ function setData(){
         getGradeAverage();
     }
     else{
-        NombreAlumno.innerHTML= "No se encontraron Alumnos";
+        NombreAlumno.innerHTML= "No se encontraron estudiantes";
         CedulaAlumno.innerHTML= "";
         nota1.value= "";
         nota2.value= "";

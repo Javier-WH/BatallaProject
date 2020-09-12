@@ -1,24 +1,6 @@
 const ConnectionTime = 1500;
 let test;
 let count = 0;
-window.addEventListener("load", () => {
-
-    // test = new Conection("ListaAlumnosCompleta", "_p_2020", null);
-    // let test2 = new Conection("seccion");
-    // let test3 = new Conection("periodo");
-    // let test4 = new Conection("MateriaCode");
-
-    // let x = "qwwqe";
-    // setTimeout(() => {
-    //     x = test.getResponse;
-    //     console.log(x);
-    // console.log(test.getResponse);
-    //     console.log(test2.getResponse);
-    //     console.log(test3.getResponse);
-    //     console.log(test4.getResponse);
-    // }, ConnectionTime);
-    // setStudensList();
-})
 
 // function setStudensList() {
 //     let list = test.getResponse;
@@ -33,7 +15,6 @@ window.addEventListener("load", () => {
 //         console.log(list);
 //     }
 // }
-
 
 
 class Conection {

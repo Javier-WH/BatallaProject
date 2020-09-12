@@ -16,3 +16,14 @@
     background-color: var(--Color-Principal);
     display: none;
 }
+
+#logoLoadinScreen {
+    position: absolute;
+    background-color: white;
+    border-radius: 100%;
+    height: 70%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}

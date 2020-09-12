@@ -11,8 +11,6 @@ let Tabla;
 let Hint;
 let TextBuscar;
 let MsjGuardar;
-let btnSiGuardar;
-let btnNoGuardar;
 /////////////////////////////
 let loadCharge = 0;
 let indice = 0;
@@ -24,6 +22,7 @@ let ListaCodigos = [];
 let ListaPeriodos;
 let ListaSecciones;
 let ListaEstudiantes;
+let NotaMaxima = 20;
 
 
 window.addEventListener("load", () => {
@@ -67,11 +66,20 @@ const events = () => {
         Hint.style.display = "none";
         TextBuscar.focus();
     });
-    TextBuscar.addEventListener("blur", ()=> Hint.style.display = "none");
-    TextBuscar.addEventListener("focus", ()=> Hint.style.display = "block");
+
+    window.addEventListener("click", () => { // oculta el hint cuando pierde el focus
+        if (document.activeElement != TextBuscar) {
+            Hint.style.display = "none";
+        }
+    })
     window.addEventListener("keydown", ForwardBackward);
     document.getElementById("BS").addEventListener("click", ForwardBackward);
     document.getElementById("BA").addEventListener("click", ForwardBackward);
+    nota1.addEventListener("change", updateListSeccion);
+    nota2.addEventListener("change", updateListSeccion);
+    nota3.addEventListener("change", updateListSeccion);
+
+    document.querySelector("#btn-Guardar").addEventListener("click", GuardarNotas);
 
 }
 
@@ -83,6 +91,8 @@ const initialize = () => {
         ListaCodigos = new Conection("MateriaCode"); //para obtener la lista de codigos de materias
         ListaSecciones = new Conection("seccion"); //para obtener la lista se secciones del profesor en cuestion
         ListaEstudiantes = new Conection("ListaAlumnosCompleta", "_p_2020", null); //carga la lista de estudiantes de un periodo
+
+
 
         nota1 = document.getElementById("Nota1");
         nota2 = document.getElementById("Nota2");
@@ -99,7 +109,7 @@ const initialize = () => {
         MsjGuardar = document.querySelector("#MensajeGuardar");
         btnSiGuardar = document.querySelector("#btnSiGuardar");
         btnNoGuardar = document.querySelector("#btnNoGuardar");
-        nota1.addEventListener("change", updateListSeccion);
+
     }
     //posiciona la sugerencia de ayuda debajo del input buscar alumno (Motor de busqueda)
 const adjustHint = () => {
@@ -109,8 +119,11 @@ const adjustHint = () => {
 const adjustSaveMessage = () => {
 
     MsjGuardar.style.top = ((window.innerHeight / 2) - (200)) + "px";
+    let logoLoad = document.querySelector("#logoLoadinScreen");
+    logoLoad.style.top = ((window.innerHeight / 2) - (logoLoad.offsetHeight / 2)) + "px";
 
 }
+
 
 //llena la sugerencia del textbox Buscar Alumno de ayuda con elementos de la listaseccion (llena el motor de busqueda)
 const fillHint = () => {
@@ -181,8 +194,13 @@ const NotaLostFocus = (e) => {
         lblInputData[2].style.color = " var(--Color-Contraste)";
     }
 
-    if (e.target.value > 20) {
-        ShowMessageAtPointer("Advertencia, la nota introducida supera los 20 puntos", "White", "Red", "Red", 7000);
+    if (e.target == nota1 || e.target == nota2 || e.target == nota3) {
+        if (e.target.value > NotaMaxima) {
+            ShowMessageAtPointer(`Advertencia, la nota introducida supera los ${NotaMaxima} puntos`, "White", "Red", "Red", 7000);
+        }
+        if (e.target.value == "" || e.target.value < 0) {
+            e.target.value = 0;
+        }
     }
     getGradeAverage();
 
@@ -230,6 +248,7 @@ const pickFromTable = (e) => {
             selectedFromTable();
             setData();
         }
+        TextBuscar.value = "";
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -244,9 +263,11 @@ function LoadingScreen() {
 
 //Revisa que las listas y arrays necesarios cargen al iniciar 
 function checkLoad() {
+    document.querySelector("#programa").style.display = "none";
     document.querySelector("#LoadingScreen").style.display = "block";
     if (Periodos.length != 0 && ListaCodigos.length != 0 && listaSeccion != 0 && lista != 0) {
-        document.querySelector("#LoadingScreen").style.display = "none";
+        document.querySelector("#programa").style.display = "block";
+        document.querySelector("#LoadingScreen").style.display = "none"; //////////<<<<===============
         setPeriodos();
         setSecciones();
         setData();
@@ -266,6 +287,7 @@ function getPeriodos() {
     } else {
         Periodos = Per;
         loadCharge += 25;
+
         setPeriodos();
     }
 }
@@ -279,6 +301,7 @@ function getCodigosMateria() {
     } else {
         ListaCodigos = codes;
         loadCharge += 25;
+
     }
 }
 
@@ -291,6 +314,7 @@ function getListaSecciones() {
     } else {
         listaSeccion = secciones;
         loadCharge += 25;
+
     }
 }
 
@@ -305,12 +329,15 @@ function getListaEstudantes() {
         loadCharge += 25;
     }
 }
-
+//funcion para cambiar de periodo
 function changePeriodo() {
+    if (!SavedData) {
+        GuardarNotas();
+    }
+
     let lisTP = document.querySelector("#List-Periodo");
     periodo = lisTP.options[lisTP.selectedIndex].value;
     ListaEstudiantes = new Conection("ListaAlumnosCompleta", periodo, null)
-
     document.querySelector("#List-Seccion").disabled = true;
     lisTP.disabled = true;
     getListaEstudantes();
@@ -319,7 +346,6 @@ function changePeriodo() {
         setData();
         document.querySelector("#List-Seccion").disabled = false;
         lisTP.disabled = false;
-        console.log(periodo);
     }, 2000);
 
 }
@@ -459,6 +485,7 @@ function setData(){
         TextBuscar.disabled = true;
         document.getElementById("Nota-Acumulada").value = "";
     }
+
 }
 
 //control botones adelante y atras
@@ -476,24 +503,58 @@ const ForwardBackward = (e) => {
             }
             TextBuscar.value = "";
             document.querySelector("#N0").focus(); //Coloca el focus en la tabla
+            setData();
+            selectedFromTable();
         }
         if ( /*indice > 0 &&*/ e.target == document.getElementById("BA") || e.target == document.getElementById("btn-Anterior") ||
-            /*e.key == "ArrowLeft" ||*/
-            e.key == "ArrowUp") {
+        /*e.key == "ArrowLeft" ||*/
+        e.key == "ArrowUp") {
             indice--;
             if (indice < 0) {
                 indice = indiceMax;
             }
             TextBuscar.value = "";
             document.querySelector("#N0").focus(); //Coloca el focus en la tabla
+            setData();
+            selectedFromTable();
         }
-        setData();
-        selectedFromTable();
     }
 }
 
+//Actualiza la listaseccion 2
 function updateListSeccion() {
-    let cedula = listaSeccion[indice]["Cedula"];
-    console.log(cedula);
-
+    listaSeccion[indice][seccion[0].toUpperCase()+"1"] = nota1.value;
+    listaSeccion[indice][seccion[0].toUpperCase()+"2"] = nota2.value;
+    listaSeccion[indice][seccion[0].toUpperCase()+"3"] = nota3.value;
+    SavedData = false;
+    setData();
+}
+///
+function GuardarNotas(){
+    if(SavedData){
+        ShowMessageAtPointer("No hay nada nuevo que Guardar");
+    }else{
+        let respuesta;
+        let S = seccion[0].toUpperCase();
+        let data = new FormData();
+        data.append("Datos", JSON.stringify(listaSeccion));
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("POST", `/BatallaProject/Batalla/PHP/BatallaSystem.php?TYPE=Update&Materia=${S}&Periodo=${periodo}`, true);
+        xhttp.onreadystatechange = ()=>{
+    
+            if(xhttp.readyState == 4 && xhttp.status == 200){
+                respuesta = xhttp.responseText;
+                if(respuesta == "OK")
+                {
+                    ShowMessageAtPointer("Las notas han sido Guardadas Correctamente");
+                    SavedData = true;
+                }
+                else
+                {
+                    ShowMessageAtPointer("Error");
+                }
+            }
+        }
+        xhttp.send(data);
+    }
 }

@@ -184,7 +184,8 @@ if (!isset($_SESSION["User"]) || !isset($_SESSION["Name"]) || !isset($_SESSION["
     <!--  -->
     <!--  -->
     <div id="LoadingScreen">
-
+            <object data="../SVG/BatallaLogo.svg" id="logoLoadinScreen"></object>
+       
 
     </div>
 

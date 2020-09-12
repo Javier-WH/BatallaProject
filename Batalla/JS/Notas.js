@@ -59,11 +59,9 @@ const events = () => {
     TextBuscar.addEventListener("keyup", fillHint);
     document.querySelector("#List-Seccion").addEventListener("change", setData);
     document.querySelector("#List-Periodo").addEventListener("change", changePeriodo);
-    btnLimpiar.addEventListener("click", () => {
-        TextBuscar.value = "";
-        Hint.style.display = "none";
-        TextBuscar.focus();
-    });
+    document.querySelector("#List-Seccion").addEventListener("change", cleanHint);
+    document.querySelector("#List-Periodo").addEventListener("change", cleanHint);
+    btnLimpiar.addEventListener("click", cleanHint);
 
     window.addEventListener("click", () => { // oculta el hint cuando pierde el focus
         if (document.activeElement != TextBuscar) {
@@ -120,6 +118,13 @@ const adjustlogoload = () => {
     let logoLoad = document.querySelector("#logoLoadinScreen");
     logoLoad.style.top = ((window.innerHeight / 2) - (logoLoad.offsetHeight / 2)) + "px";
 
+}
+//limpiar el hint
+
+function cleanHint(){
+    TextBuscar.value = "";
+    Hint.style.display = "none";
+    TextBuscar.focus();
 }
 
 

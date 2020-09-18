@@ -115,13 +115,13 @@ const adjustHint = () => {
 }
 const adjustlogoload = () => {
 
-    let logoLoad = document.querySelector("#logoLoadinScreen");
-    logoLoad.style.top = ((window.innerHeight / 2) - (logoLoad.offsetHeight / 2)) + "px";
+        let logoLoad = document.querySelector("#logoLoadinScreen");
+        logoLoad.style.top = ((window.innerHeight / 2) - (logoLoad.offsetHeight / 2)) + "px";
 
-}
-//limpiar el hint
+    }
+    //limpiar el hint
 
-function cleanHint(){
+function cleanHint() {
     TextBuscar.value = "";
     Hint.style.display = "none";
     TextBuscar.focus();
@@ -322,6 +322,7 @@ function getListaSecciones() {
 }
 
 function getListaEstudantes() {
+    lista = [];
     let nomina = ListaEstudiantes.getResponse;
     if (nomina == "Error") {
         setTimeout(() => {
@@ -339,6 +340,10 @@ function changePeriodo() {
     }
 
     let lisTP = document.querySelector("#List-Periodo");
+    let R_periodo = periodo;
+    // console.log(periodo);
+
+
     periodo = lisTP.options[lisTP.selectedIndex].value;
     ListaEstudiantes = new Conection("ListaAlumnosCompleta", periodo, null)
     document.querySelector("#List-Seccion").disabled = true;
@@ -346,9 +351,15 @@ function changePeriodo() {
     getListaEstudantes();
     ShowMessageAtPointer("Espere un momento por favor", "var(--Color-Secundario)", "var(--Color-Principal)", "var(--Color-Principal)", 2000);
     setTimeout(() => {
-        setData();
-        document.querySelector("#List-Seccion").disabled = false;
-        lisTP.disabled = false;
+        if (lista.length == 0) {
+            ShowMessageAtPointer("Error al obtener el periodo solicitado, por favor intentelo de nuevo intentelo de nuevo", "red", "white", "red", 15000);
+        } else {
+            setData();
+            document.querySelector("#List-Seccion").disabled = false;
+            lisTP.disabled = false;
+
+
+        }
     }, 2000);
 
 }
